@@ -142,6 +142,10 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.RAYDIUM_AMM,
     },
+    '7rh7ZtPzHqdY82RWjHf1Q8NaQiWnyNqkC48vSixcBvad': {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.NEMO_SWAP,
+    },
     '7sPptkymzvayoSbLXzBsXEF8TSf3typNnAWkrKrDizNb': {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.MANGO_ICO,
@@ -248,6 +252,10 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
     FsJ3A3u2vn5cTVofAjvy6y5kwABJAqYWpe4975bi2epH: {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.PYTH_MAINNET,
+    },
+    GasP6kcNpTdXA1M7ENyh5kCEvtHPgy71Habxe62gqHqH: {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.GASLESS,
     },
     GqTPL6qRf5aUuqscLh8Rg2HTxPUXfhhAXDptTLhp1t2J: {
         deployments: [Cluster.MainnetBeta],
@@ -416,14 +424,6 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
     wormDTUJ6AWPNvk59vGQbDvGJmqbDTdgWgAqcLBCgUb: {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.WORMHOLE_TOKEN,
-    },
-    '7rh7ZtPzHqdY82RWjHf1Q8NaQiWnyNqkC48vSixcBvad': {
-        deployments: [Cluster.MainnetBeta],
-        name: PROGRAM_NAMES.NEMO_SWAP,
-    },
-    GasP6kcNpTdXA1M7ENyh5kCEvtHPgy71Habxe62gqHqH: {
-        deployments: [Cluster.MainnetBeta],
-        name: PROGRAM_NAMES.GASLESS,
     },
 };
 

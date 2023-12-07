@@ -215,8 +215,9 @@ function StatusCard({ signature, autoRefresh }: SignatureProps & AutoRefreshProp
             if (cluster === Cluster.MainnetBeta) {
                 errorLink = err.errorLink;
             } else {
-                errorLink = `${err.errorLink}?cluster=${clusterName.toLowerCase()}${cluster === Cluster.Custom ? `&customUrl=${clusterUrl}` : ''
-                    }`;
+                errorLink = `${err.errorLink}?cluster=${clusterName.toLowerCase()}${
+                    cluster === Cluster.Custom ? `&customUrl=${clusterUrl}` : ''
+                }`;
             }
         }
     }
@@ -320,7 +321,7 @@ function StatusCard({ signature, autoRefresh }: SignatureProps & AutoRefreshProp
 
                 {fee && (
                     <tr>
-                        <td>Fee (SOL)</td>
+                        <td>Fee (RENEC)</td>
                         <td className="text-lg-end">
                             <SolBalance lamports={fee} />
                         </td>
@@ -442,8 +443,8 @@ function AccountsCard({ signature }: SignatureProps) {
                         <tr>
                             <th className="text-muted">#</th>
                             <th className="text-muted">Address</th>
-                            <th className="text-muted">Change (SOL)</th>
-                            <th className="text-muted">Post Balance (SOL)</th>
+                            <th className="text-muted">Change (RENEC)</th>
+                            <th className="text-muted">Post Balance (RENEC)</th>
                             <th className="text-muted">Details</th>
                         </tr>
                     </thead>
