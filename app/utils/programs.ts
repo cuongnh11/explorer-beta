@@ -82,6 +82,8 @@ export enum PROGRAM_NAMES {
     SOLANART_GO = 'Solanart - Global offers',
     STEPN_DEX = 'STEPN Dex',
     OPENBOOK_DEX = 'OpenBook Dex',
+    NEMO_SWAP = 'NemoSwap Program',
+    GASLESS = 'Gasless Program',
 }
 
 const ALL_CLUSTERS = [Cluster.Custom, Cluster.Devnet, Cluster.Testnet, Cluster.MainnetBeta];
@@ -139,6 +141,10 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
     '675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8': {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.RAYDIUM_AMM,
+    },
+    '7rh7ZtPzHqdY82RWjHf1Q8NaQiWnyNqkC48vSixcBvad': {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.NEMO_SWAP,
     },
     '7sPptkymzvayoSbLXzBsXEF8TSf3typNnAWkrKrDizNb': {
         deployments: [Cluster.MainnetBeta],
@@ -246,6 +252,10 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
     FsJ3A3u2vn5cTVofAjvy6y5kwABJAqYWpe4975bi2epH: {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.PYTH_MAINNET,
+    },
+    GasP6kcNpTdXA1M7ENyh5kCEvtHPgy71Habxe62gqHqH: {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.GASLESS,
     },
     GqTPL6qRf5aUuqscLh8Rg2HTxPUXfhhAXDptTLhp1t2J: {
         deployments: [Cluster.MainnetBeta],

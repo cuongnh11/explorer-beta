@@ -35,7 +35,15 @@ const getEthAddress = (link?: string) => {
     return address;
 };
 
-export function TokenAccountSection({ account, tokenAccount, tokenInfo }: { account: Account; tokenAccount: TokenAccount, tokenInfo?: FullLegacyTokenInfo }) {
+export function TokenAccountSection({
+    account,
+    tokenAccount,
+    tokenInfo,
+}: {
+    account: Account;
+    tokenAccount: TokenAccount;
+    tokenInfo?: FullLegacyTokenInfo;
+}) {
     const { cluster } = useCluster();
 
     try {
@@ -74,7 +82,15 @@ export function TokenAccountSection({ account, tokenAccount, tokenInfo }: { acco
     return <UnknownAccountCard account={account} />;
 }
 
-function FungibleTokenMintAccountCard({ account, mintInfo, tokenInfo }: { account: Account; mintInfo: MintAccountInfo, tokenInfo?: FullLegacyTokenInfo }) {
+function FungibleTokenMintAccountCard({
+    account,
+    mintInfo,
+    tokenInfo,
+}: {
+    account: Account;
+    mintInfo: MintAccountInfo;
+    tokenInfo?: FullLegacyTokenInfo;
+}) {
     const fetchInfo = useFetchAccountInfo();
     const refresh = () => fetchInfo(account.pubkey, 'parsed');
 
@@ -355,17 +371,20 @@ function TokenAccountCard({ account, info }: { account: Account; info: TokenAcco
 
     const balance = info.isNative ? (
         <>
-            {'\u25ce'}<span className="font-monospace">{new BigNumber(info.tokenAmount.uiAmountString).toFormat(9)}</span>
+            {'\u25ce'}
+            <span className="font-monospace">{new BigNumber(info.tokenAmount.uiAmountString).toFormat(9)}</span>
         </>
-    ) : <>{info.tokenAmount.uiAmountString}</>;
+    ) : (
+        <>{info.tokenAmount.uiAmountString}</>
+    );
 
     useEffect(() => {
         if (info.isNative) {
             setSymbol('SOL');
         } else {
-            setSymbol(tokenInfo?.symbol)
+            setSymbol(tokenInfo?.symbol);
         }
-    }, [tokenInfo])
+    }, [tokenInfo]);
 
     return (
         <div className="card">
@@ -414,7 +433,7 @@ function TokenAccountCard({ account, info }: { account: Account; info: TokenAcco
                 )}
                 {info.rentExemptReserve && (
                     <tr>
-                        <td>Rent-exempt reserve (SOL)</td>
+                        <td>Rent-exempt reserve (RENEC)</td>
                         <td className="text-lg-end">
                             <>
                                 ◎
