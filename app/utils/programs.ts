@@ -82,6 +82,8 @@ export enum PROGRAM_NAMES {
     SOLANART_GO = 'Solanart - Global offers',
     STEPN_DEX = 'STEPN Dex',
     OPENBOOK_DEX = 'OpenBook Dex',
+    NEMO_SWAP = 'NemoSwap Program',
+    GASLESS = 'Gasless Program',
 }
 
 const ALL_CLUSTERS = [Cluster.Custom, Cluster.Devnet, Cluster.Testnet, Cluster.MainnetBeta];
@@ -414,6 +416,14 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
     wormDTUJ6AWPNvk59vGQbDvGJmqbDTdgWgAqcLBCgUb: {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.WORMHOLE_TOKEN,
+    },
+    '7rh7ZtPzHqdY82RWjHf1Q8NaQiWnyNqkC48vSixcBvad': {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.NEMO_SWAP,
+    },
+    GasP6kcNpTdXA1M7ENyh5kCEvtHPgy71Habxe62gqHqH: {
+        deployments: [Cluster.MainnetBeta],
+        name: PROGRAM_NAMES.GASLESS,
     },
 };
 

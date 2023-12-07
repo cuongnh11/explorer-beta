@@ -1,3 +1,5 @@
+import { clusterApiUrl } from '@solana/web3.js';
+
 export enum ClusterStatus {
     Connected,
     Connecting,
@@ -39,9 +41,9 @@ export function clusterName(cluster: Cluster): string {
     }
 }
 
-export const MAINNET_BETA_URL = 'https://api.mainnet-beta.solana.com';
-export const TESTNET_URL = 'https://api.testnet.solana.com';
-export const DEVNET_URL = 'https://api.devnet.solana.com';
+export const MAINNET_BETA_URL = 'https://api-mainnet-beta.renec.foundation:8899';
+export const TESTNET_URL = 'https://api-testnet.renec.foundation:8899';
+export const DEVNET_URL = clusterApiUrl('devnet');
 
 export function clusterUrl(cluster: Cluster, customUrl: string): string {
     const modifyUrl = (url: string): string => {

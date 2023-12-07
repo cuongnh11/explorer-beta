@@ -1,6 +1,6 @@
 import { Stream } from '@cloudflare/stream-react';
 import { LoadingArtPlaceholder } from '@components/common/LoadingArtPlaceholder';
-import ErrorLogo from '@img/logos-solana/dark-solana-logo.svg';
+import ErrorLogo from '@img/logos/logo.png';
 import { MetadataJson, MetaDataJsonCategory, MetadataJsonFile } from '@metaplex/js';
 import { PublicKey } from '@solana/web3.js';
 import { getLast } from '@utils/index';
@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 export const MAX_TIME_LOADING_IMAGE = 5000; /* 5 seconds */
 
-const ErrorPlaceHolder = () => <Image src={ErrorLogo} width={120} height={120} alt="Solana Logo" />;
+const ErrorPlaceHolder = () => <Image src={ErrorLogo} width={120} height={120} alt="RENEC Logo" />;
 
 const ViewOriginalArtContentLink = ({ src }: { src: string }) => {
     if (!src) {
@@ -32,10 +32,7 @@ export const NFTImageContent = ({ uri }: { uri?: string }) => {
     return (
         <div style={{ maxHeight: 200, width: 150 }}>
             {isLoading && <LoadingArtPlaceholder />}
-            <div
-                className={`rounded mx-auto ${isLoading ? 'd-none' : 'd-block'}`}
-                style={{ overflow: 'hidden' }}
-            >
+            <div className={`rounded mx-auto ${isLoading ? 'd-none' : 'd-block'}`} style={{ overflow: 'hidden' }}>
                 <img alt="nft" src={uri} width="100%" onLoad={() => setIsLoading(false)} />
             </div>
             {!isLoading && uri && <ViewOriginalArtContentLink src={uri} />}
