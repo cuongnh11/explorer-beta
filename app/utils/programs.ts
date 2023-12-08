@@ -86,9 +86,9 @@ export enum PROGRAM_NAMES {
     GASLESS = 'Gasless Program',
 }
 
-const ALL_CLUSTERS = [Cluster.Custom, Cluster.Devnet, Cluster.Testnet, Cluster.MainnetBeta];
+const ALL_CLUSTERS = [Cluster.Custom, Cluster.Testnet, Cluster.MainnetBeta];
 
-const LIVE_CLUSTERS = [Cluster.Devnet, Cluster.Testnet, Cluster.MainnetBeta];
+const LIVE_CLUSTERS = [Cluster.Testnet, Cluster.MainnetBeta];
 
 export const LOADER_IDS: { [key: string]: string } = {
     BPFLoader1111111111111111111111111111111111: 'BPF Loader',
@@ -118,17 +118,9 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.RAYDIUM_LP_2,
     },
-    '2rHhojZ7hpu1zA91nvZmT8TqWWvMcKmmNBCr2mKTtMq4': {
-        deployments: [Cluster.Devnet],
-        name: PROGRAM_NAMES.WORMHOLE_NFT,
-    },
     '3XXuUFfweXBwFgFfYaejLvZE4cGZiHgKiGfMtdxNzYmv': {
-        deployments: [Cluster.MainnetBeta, Cluster.Devnet],
+        deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.CLOCKWORK_1,
-    },
-    '3u8hJUVTA4jH1wYAyUur7FFZVQ8H635K3tSHHF4ssjQ5': {
-        deployments: [Cluster.Devnet],
-        name: PROGRAM_NAMES.WORMHOLE_CORE,
     },
     '5ZfZAwP2m93waazg8DkrrVmsupeiPEvaEHowiUP7UAbJ': {
         deployments: [Cluster.MainnetBeta],
@@ -198,7 +190,7 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         name: PROGRAM_NAMES.SOLANART,
     },
     CLoCKyJ6DXBJqqu2VWx9RLbgnwwR6BMHHuyasVmfMzBh: {
-        deployments: [Cluster.MainnetBeta, Cluster.Devnet],
+        deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.CLOCKWORK_2,
     },
     ComputeBudget111111111111111111111111111111: {
@@ -214,12 +206,8 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         name: PROGRAM_NAMES.SOLIDO,
     },
     Crt7UoUR6QgrFrN7j8rmSQpUTNWNSitSwWvsWGf1qZ5t: {
-        deployments: [Cluster.Devnet, Cluster.MainnetBeta],
+        deployments: [ Cluster.MainnetBeta],
         name: PROGRAM_NAMES.SABER_ROUTER,
-    },
-    DZnkkTmCiFWfYTfT41X3Rd1kDgozqzxWaHqsw6W4x2oe: {
-        deployments: [Cluster.Devnet],
-        name: PROGRAM_NAMES.WORMHOLE_TOKEN,
     },
     DjVE6JNiYqPL2QXyCUUh8rNjHrbz9hXHNYt99MQ59qw1: {
         deployments: [Cluster.MainnetBeta],
@@ -262,7 +250,7 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         name: PROGRAM_NAMES.MANGO_GOVERNANCE,
     },
     HEvSKofvBgfaexv23kMabbYqxasxU3mQ4ibBMEmJWHny: {
-        deployments: [Cluster.Devnet, Cluster.MainnetBeta],
+        deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.CHAINLINK_STORE,
     },
     JD3bq9hGdy38PuWQ4h2YJpELmHVGPPfFSuFkpzAd9zfu: {
@@ -278,7 +266,7 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         name: PROGRAM_NAMES.LENDING,
     },
     MERLuDFBMmsHnsBPZw2sDQZHvXFMwp8EdjudcU2HKky: {
-        deployments: [Cluster.Devnet, Cluster.MainnetBeta],
+        deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.MERCURIAL,
     },
     MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD: {
@@ -330,7 +318,7 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         name: PROGRAM_NAMES.STEP_SWAP,
     },
     SSwpkEEcbUqx4vtoEByFjSkhKdCT862DNVb52nZg1UZ: {
-        deployments: [Cluster.Devnet, Cluster.MainnetBeta],
+        deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.SABER_SWAP,
     },
     SWiMDJYFUGj6cPrQ6QYYYWZtvXQdRChSVAygDZDsCHC: {
@@ -374,11 +362,11 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
         name: PROGRAM_NAMES.NFT_AUCTION,
     },
     cjg3oHmg9uuPsP8D6g29NWvhySJkdYdAo9D25PRbKXJ: {
-        deployments: [Cluster.Devnet, Cluster.MainnetBeta],
+        deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.CHAINLINK_ORACLE,
     },
     cmtDvXumGCrqC1Age74AVPhSRVXJMd8PJS91L8KbNCK: {
-        deployments: [Cluster.Devnet, Cluster.MainnetBeta],
+        deployments: [Cluster.MainnetBeta],
         name: PROGRAM_NAMES.ACCOUNT_COMPRESSION,
     },
     cndy3Z4yapfJBmL3ShUp5exZKqR3z33thTzeNMm2gRZ: {
@@ -388,10 +376,6 @@ export const PROGRAM_INFO_BY_ID: { [address: string]: ProgramInfo } = {
     cndyAnrLdpjq1Ssp1z8xxDsB8dxe7u4HL5Nxi2K5WXZ: {
         deployments: LIVE_CLUSTERS,
         name: PROGRAM_NAMES.NFT_CANDY_MACHINE,
-    },
-    gSbePebfvPy7tRqimPoVecS2UsBvYv46ynrzWocc92s: {
-        deployments: [Cluster.Devnet],
-        name: PROGRAM_NAMES.PYTH_DEVNET,
     },
     metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s: {
         deployments: LIVE_CLUSTERS,

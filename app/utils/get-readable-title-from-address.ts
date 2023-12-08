@@ -24,9 +24,6 @@ export default async function getReadableTitleFromAddress(props: AddressPageMeta
         case 'custom':
             cluster = Cluster.Custom;
             break;
-        case 'devnet':
-            cluster = Cluster.Devnet;
-            break;
         case 'testnet':
             cluster = Cluster.Testnet;
             break;
