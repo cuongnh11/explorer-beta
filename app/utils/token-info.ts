@@ -42,7 +42,6 @@ type FullLegacyTokenInfoList = {
 function getChainId(cluster: Cluster): ChainId | undefined {
     if (cluster === Cluster.MainnetBeta) return ChainId.MAINNET;
     else if (cluster === Cluster.Testnet) return ChainId.TESTNET;
-    else if (cluster === Cluster.Devnet) return ChainId.DEVNET;
     else return undefined;
 }
 
