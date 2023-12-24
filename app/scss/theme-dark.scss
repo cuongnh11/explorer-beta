@@ -36,3 +36,6 @@ $path-to-img: '/img/dashkit' !default;
 
 // Dark mode overrides
 @import 'solana-dark-overrides';
+
+// Custom styles
+@import "custom";
