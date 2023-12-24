@@ -18,6 +18,7 @@ import {ClusterStatus} from '@utils/cluster';
 import {abbreviatedNumber, lamportsToSol, slotsToHumanString} from '@utils/index';
 import {percentage} from '@utils/math';
 import React from 'react';
+import {RecentTransactionsCard} from "@components/RecentTransactions";
 
 export default function Page() {
   return (
@@ -27,6 +28,7 @@ export default function Page() {
           <StatsCardBody/>
           <LiveTransactionStatsCard/>
           <StakingComponent/>
+          <RecentTransactionsCard/>
         </div>
       </SupplyProvider>
     </StatsProvider>
