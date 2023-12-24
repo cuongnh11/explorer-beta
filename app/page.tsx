@@ -3,6 +3,7 @@
 import {ErrorCard} from '@components/common/ErrorCard';
 import {LoadingCard} from '@components/common/LoadingCard';
 import {LiveTransactionStatsCard} from '@components/LiveTransactionStatsCard';
+import {RecentTransactionsCard} from "@components/RecentTransactions";
 import {StatsNotReady} from '@components/StatsNotReady';
 import {useVoteAccounts} from '@providers/accounts/vote-accounts';
 import {useCluster} from '@providers/cluster';
@@ -18,7 +19,6 @@ import {ClusterStatus} from '@utils/cluster';
 import {abbreviatedNumber, lamportsToSol, slotsToHumanString} from '@utils/index';
 import {percentage} from '@utils/math';
 import React from 'react';
-import {RecentTransactionsCard} from "@components/RecentTransactions";
 
 export default function Page() {
   return (
