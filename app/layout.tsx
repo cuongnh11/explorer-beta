@@ -13,50 +13,50 @@ import {Metadata} from 'next/types';
 import React from 'react'
 
 export const metadata: Metadata = {
-  description: 'Inspect transactions, accounts, blocks, and more on the RENEC blockchain',
-  manifest: '/manifest.json',
-  title: 'Explorer | RENEC',
-  viewport: {
-    initialScale: 1,
-    maximumScale: 1,
-    width: 'device-width',
-  },
+    description: 'Inspect transactions, accounts, blocks, and more on the RENEC blockchain',
+    manifest: '/manifest.json',
+    title: 'Explorer | RENEC',
+    viewport: {
+        initialScale: 1,
+        maximumScale: 1,
+        width: 'device-width',
+    },
 };
 
 const rubikFont = Inter({
-  display: 'swap',
-  subsets: ['vietnamese'],
-  variable: '--explorer-default-font',
-  weight: ['300', '400', '700'],
+    display: 'swap',
+    subsets: ['vietnamese'],
+    variable: '--explorer-default-font',
+    weight: ['300', '400', '700'],
 });
 
 export default function RootLayout({
-                                     analytics,
-                                     children,
+                                       analytics,
+                                       children,
                                    }: {
-  analytics?: React.ReactNode;
-  children: React.ReactNode;
+    analytics?: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  return (
-    <html lang="en" className={`${rubikFont.variable}`}>
-    <body>
-    <ScrollAnchorProvider>
-      <ClusterProvider>
-        <ClusterModal/>
-        <div className="main-content d-flex flex-column">
-          <Navbar/>
-          <MessageBanner/>
-          <ClusterStatusBanner/>
-          <SearchBar/>
-          <div className="main-body">
-            {children}
-          </div>
-          <Footer/>
-        </div>
-      </ClusterProvider>
-    </ScrollAnchorProvider>
-    {analytics}
-    </body>
-    </html>
-  );
+    return (
+        <html lang="en" className={`${rubikFont.variable}`}>
+        <body>
+        <ScrollAnchorProvider>
+            <ClusterProvider>
+                <ClusterModal/>
+                <div className="main-content d-flex flex-column">
+                    <Navbar/>
+                    <MessageBanner/>
+                    <ClusterStatusBanner/>
+                    <SearchBar/>
+                    <div className="main-body">
+                        {children}
+                    </div>
+                    <Footer/>
+                </div>
+            </ClusterProvider>
+        </ScrollAnchorProvider>
+        {analytics}
+        </body>
+        </html>
+    );
 }
