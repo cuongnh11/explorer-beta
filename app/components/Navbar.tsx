@@ -14,6 +14,7 @@ export function Navbar() {
     const [collapse, setCollapse] = React.useState(false);
     const homePath = useClusterPath({pathname: '/'});
     const supplyPath = useClusterPath({pathname: '/supply'});
+    const transactionsPath = useClusterPath({pathname: '/transactions'});
     const inspectorPath = useClusterPath({pathname: '/tx/inspector'});
     const selectedLayoutSegment = useSelectedLayoutSegment();
     const selectedLayoutSegments = useSelectedLayoutSegments();
@@ -36,6 +37,14 @@ export function Navbar() {
                                 href={homePath}
                             >
                                 Dashboard
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link
+                                className={`nav-link${selectedLayoutSegment === 'transactions' ? ' active' : ''}`}
+                                href={transactionsPath}
+                            >
+                                Transactions
                             </Link>
                         </li>
                         <li className="nav-item">
