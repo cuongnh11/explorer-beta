@@ -1,7 +1,3 @@
-<p align="center">
-    <img alt="RENEC" src="https://i.imgur.com/IKyzQ6T.png" width="250" />
-</p>
-
 # RENEC Explorer
 
 ## Development
@@ -20,13 +16,13 @@
 
 All claims, content, designs, algorithms, estimates, roadmaps,
 specifications, and performance measurements described in this project
-are done with the RENEC Foundation's ("SF") best efforts. It is up to
+are done with the RENEC Foundation's ("RF") best efforts. It is up to
 the reader to check and validate their accuracy and truthfulness.
 Furthermore nothing in this project constitutes a solicitation for
 investment.
 
-Any content produced by SF or developer resources that SF provides, are
-for educational and inspiration purposes only. SF does not encourage,
+Any content produced by RF or developer resources that RF provides, are
+for educational and inspiration purposes only. RF does not encourage,
 induce or sanction the deployment, integration or use of any such
 applications (including the code comprising the RENEC blockchain
 protocol) in violation of applicable laws or regulations and hereby
