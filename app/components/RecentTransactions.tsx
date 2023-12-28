@@ -3,6 +3,7 @@
 import {ErrorCard} from "@components/common/ErrorCard";
 import {LoadingCard} from "@components/common/LoadingCard";
 import {Signature} from "@components/common/Signature";
+import {TableCardBody} from "@components/common/TableCardBody";
 import {useCluster} from "@providers/cluster";
 import {useDashboardInfo} from "@providers/stats/solanaClusterStats";
 import {ConfirmedTransactionMeta, Connection, Message} from "@solana/web3.js";
@@ -100,23 +101,18 @@ export const RecentTransactionsCard = () => {
 
         return (
             <div className="card">
-                <div className="table-responsive mb-0">
-                    <table className="table table-sm table-nowrap card-table">
-                        <thead>
-                        <tr>
-                            <th>TX HASH</th>
-                            <th>STATUS</th>
-                            <th>SLOT</th>
-                            <th>TIME</th>
-                        </tr>
-                        </thead>
-                        <tbody className="list">
-                        {transactions?.map(data => (
-                            <RecentTransactionRow key={data.transaction.signatures[0]} data={data}/>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
+                <TableCardBody>
+                    <tr>
+                        <th>TX HASH</th>
+                        <th>STATUS</th>
+                        <th>SLOT</th>
+                        <th>TIME</th>
+                    </tr>
+                    {transactions?.map(data => (
+                        <RecentTransactionRow key={data.transaction.signatures[0]} data={data}/>
+                    ))}
+
+                </TableCardBody>
             </div>
         );
     }
