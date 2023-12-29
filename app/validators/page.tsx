@@ -7,6 +7,8 @@ export const metadata = {
 
 export default function TransactionsPage() {
     return (
-        <ValidatorsPageClient />
+        <div className="container pt-4">
+            <ValidatorsPageClient />
+        </div>
     );
 }
