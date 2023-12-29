@@ -1,6 +1,6 @@
-import { MintAccountInfo } from '@validators/accounts/token';
+import {MintAccountInfo} from '@utils/validators/accounts/token';
 
-import { ParsedData, TokenProgramData } from '..';
+import {ParsedData, TokenProgramData} from '..';
 
 export default function isMetaplexNFT(
     parsedData?: ParsedData,

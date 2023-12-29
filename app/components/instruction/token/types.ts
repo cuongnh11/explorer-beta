@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 
-import { PublicKeyFromString } from '@validators/pubkey';
-import { array, enums, Infer, nullable, number, optional, string, type, union } from 'superstruct';
+import {PublicKeyFromString} from '@utils/validators/pubkey';
+import {array, enums, Infer, nullable, number, optional, string, type, union} from 'superstruct';
 
 export type TokenAmountUi = Infer<typeof TokenAmountUi>;
 export const TokenAmountUi = type({

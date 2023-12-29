@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 
-import { PublicKeyFromString } from '@validators/pubkey';
-import { enums, Infer, string, type } from 'superstruct';
+import {PublicKeyFromString} from '@utils/validators/pubkey';
+import {enums, Infer, string, type} from 'superstruct';
 
 export type NonceAccountType = Infer<typeof NonceAccountType>;
 export const NonceAccountType = enums(['uninitialized', 'initialized']);

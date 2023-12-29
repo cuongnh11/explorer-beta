@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 
-import { PublicKeyFromString } from '@validators/pubkey';
-import { any, array, boolean, enums, Infer, nullable, number, optional, string, type } from 'superstruct';
+import {PublicKeyFromString} from '@utils/validators/pubkey';
+import {any, array, boolean, enums, Infer, nullable, number, optional, string, type} from 'superstruct';
 
 export type TokenAccountType = Infer<typeof TokenAccountType>;
 export const TokenAccountType = enums(['mint', 'account', 'multisig']);

@@ -1,20 +1,20 @@
-import { isSerumInstruction, parseSerumInstructionTitle } from '@components/instruction/serum/types';
-import { IX_TITLES, TokenInstructionType } from '@components/instruction/token/types';
+import {isSerumInstruction, parseSerumInstructionTitle} from '@components/instruction/serum/types';
+import {IX_TITLES, TokenInstructionType} from '@components/instruction/token/types';
 import {
     isTokenLendingInstruction,
     parseTokenLendingInstructionTitle,
 } from '@components/instruction/token-lending/types';
-import { isTokenSwapInstruction, parseTokenSwapInstructionTitle } from '@components/instruction/token-swap/types';
-import { TOKEN_PROGRAM_ID } from '@providers/accounts/tokens';
+import {isTokenSwapInstruction, parseTokenSwapInstructionTitle} from '@components/instruction/token-swap/types';
+import {TOKEN_PROGRAM_ID} from '@providers/accounts/tokens';
 import {
     ConfirmedSignatureInfo,
     ParsedInstruction,
     ParsedTransactionWithMeta,
     PartiallyDecodedInstruction,
 } from '@solana/web3.js';
-import { intoTransactionInstruction } from '@utils/tx';
-import { ParsedInfo } from '@validators/index';
-import { create } from 'superstruct';
+import {intoTransactionInstruction} from '@utils/tx';
+import {ParsedInfo} from '@utils/validators/index';
+import {create} from 'superstruct';
 
 export type InstructionType = {
     name: string;

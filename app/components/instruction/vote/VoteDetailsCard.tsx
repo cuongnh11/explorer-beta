@@ -1,15 +1,15 @@
-import { Address } from '@components/common/Address';
-import { InstructionDetailsProps } from '@components/transaction/InstructionsSection';
-import { useCluster } from '@providers/cluster';
-import { PublicKey } from '@solana/web3.js';
-import { displayTimestamp } from '@utils/date';
-import { camelToTitleCase } from '@utils/index';
-import { ParsedInfo } from '@validators/index';
+import {Address} from '@components/common/Address';
+import {InstructionDetailsProps} from '@components/transaction/InstructionsSection';
+import {useCluster} from '@providers/cluster';
+import {PublicKey} from '@solana/web3.js';
+import {displayTimestamp} from '@utils/date';
+import {camelToTitleCase} from '@utils/index';
+import {ParsedInfo} from '@utils/validators/index';
 import React from 'react';
-import { create, Struct } from 'superstruct';
+import {create, Struct} from 'superstruct';
 
-import { InstructionCard } from '../InstructionCard';
-import { UnknownDetailsCard } from '../UnknownDetailsCard';
+import {InstructionCard} from '../InstructionCard';
+import {UnknownDetailsCard} from '../UnknownDetailsCard';
 import {
     AuthorizeInfo,
     UpdateCommissionInfo,

@@ -1,15 +1,15 @@
-import { ParsedInstruction, ParsedTransaction, SignatureResult } from '@solana/web3.js';
-import { ParsedInfo } from '@validators/index';
+import {ParsedInstruction, ParsedTransaction, SignatureResult} from '@solana/web3.js';
+import {ParsedInfo} from '@utils/validators/index';
 import React from 'react';
-import { create } from 'superstruct';
+import {create} from 'superstruct';
 
-import { UnknownDetailsCard } from '../UnknownDetailsCard';
-import { AuthorizeDetailsCard } from './AuthorizeDetailsCard';
-import { DeactivateDetailsCard } from './DeactivateDetailsCard';
-import { DelegateDetailsCard } from './DelegateDetailsCard';
-import { InitializeDetailsCard } from './InitializeDetailsCard';
-import { MergeDetailsCard } from './MergeDetailsCard';
-import { SplitDetailsCard } from './SplitDetailsCard';
+import {UnknownDetailsCard} from '../UnknownDetailsCard';
+import {AuthorizeDetailsCard} from './AuthorizeDetailsCard';
+import {DeactivateDetailsCard} from './DeactivateDetailsCard';
+import {DelegateDetailsCard} from './DelegateDetailsCard';
+import {InitializeDetailsCard} from './InitializeDetailsCard';
+import {MergeDetailsCard} from './MergeDetailsCard';
+import {SplitDetailsCard} from './SplitDetailsCard';
 import {
     AuthorizeInfo,
     DeactivateInfo,
@@ -19,7 +19,7 @@ import {
     SplitInfo,
     WithdrawInfo,
 } from './types';
-import { WithdrawDetailsCard } from './WithdrawDetailsCard';
+import {WithdrawDetailsCard} from './WithdrawDetailsCard';
 
 type DetailsProps = {
     tx: ParsedTransaction;

@@ -1,5 +1,5 @@
-import { Slot } from '@components/common/Slot';
-import { SlotHashEntry, SlotHashesInfo, SysvarAccount } from '@validators/accounts/sysvar';
+import {Slot} from '@components/common/Slot';
+import {SlotHashEntry, SlotHashesInfo, SysvarAccount} from '@utils/validators/accounts/sysvar';
 import React from 'react';
 
 export function SlotHashesCard({ sysvarAccount }: { sysvarAccount: SysvarAccount }) {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 
-import { PublicKeyFromString } from '@validators/pubkey';
-import { array, enums, Infer, nullable, number, string, type } from 'superstruct';
+import {PublicKeyFromString} from '@utils/validators/pubkey';
+import {array, enums, Infer, nullable, number, string, type} from 'superstruct';
 
 export type VoteAccountType = Infer<typeof VoteAccountType>;
 export const VoteAccountType = enums(['vote']);

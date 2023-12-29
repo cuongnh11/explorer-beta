@@ -1,23 +1,23 @@
-import { UnknownAccountCard } from '@components/account/UnknownAccountCard';
-import { Address } from '@components/common/Address';
-import { Downloadable } from '@components/common/Downloadable';
-import { InfoTooltip } from '@components/common/InfoTooltip';
-import { SecurityTXTBadge } from '@components/common/SecurityTXTBadge';
-import { Slot } from '@components/common/Slot';
-import { SolBalance } from '@components/common/SolBalance';
-import { TableCardBody } from '@components/common/TableCardBody';
-import { Account, useFetchAccountInfo } from '@providers/accounts';
-import { useCluster } from '@providers/cluster';
-import { addressLabel } from '@utils/tx';
+import {UnknownAccountCard} from '@components/account/UnknownAccountCard';
+import {Address} from '@components/common/Address';
+import {Downloadable} from '@components/common/Downloadable';
+import {InfoTooltip} from '@components/common/InfoTooltip';
+import {SecurityTXTBadge} from '@components/common/SecurityTXTBadge';
+import {Slot} from '@components/common/Slot';
+import {SolBalance} from '@components/common/SolBalance';
+import {TableCardBody} from '@components/common/TableCardBody';
+import {Account, useFetchAccountInfo} from '@providers/accounts';
+import {useCluster} from '@providers/cluster';
+import {addressLabel} from '@utils/tx';
 import {
     ProgramAccountInfo,
     ProgramBufferAccountInfo,
     ProgramDataAccountInfo,
     UpgradeableLoaderAccount,
-} from '@validators/accounts/upgradeable-program';
+} from '@utils/validators/accounts/upgradeable-program';
 import Link from 'next/link';
 import React from 'react';
-import { ExternalLink, RefreshCw } from 'react-feather';
+import {ExternalLink, RefreshCw} from 'react-feather';
 
 export function UpgradeableLoaderAccountSection({
     account,

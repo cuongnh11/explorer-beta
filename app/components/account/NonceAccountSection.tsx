@@ -1,8 +1,8 @@
-import { AccountAddressRow, AccountBalanceRow, AccountHeader } from '@components/common/Account';
-import { Address } from '@components/common/Address';
-import { TableCardBody } from '@components/common/TableCardBody';
-import { Account, useFetchAccountInfo } from '@providers/accounts';
-import { NonceAccount } from '@validators/accounts/nonce';
+import {AccountAddressRow, AccountBalanceRow, AccountHeader} from '@components/common/Account';
+import {Address} from '@components/common/Address';
+import {TableCardBody} from '@components/common/TableCardBody';
+import {Account, useFetchAccountInfo} from '@providers/accounts';
+import {NonceAccount} from '@utils/validators/accounts/nonce';
 import React from 'react';
 
 export function NonceAccountSection({ account, nonceAccount }: { account: Account; nonceAccount: NonceAccount }) {

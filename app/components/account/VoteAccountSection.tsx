@@ -1,10 +1,10 @@
-import { AccountAddressRow, AccountBalanceRow, AccountHeader } from '@components/common/Account';
-import { Address } from '@components/common/Address';
-import { Slot } from '@components/common/Slot';
-import { TableCardBody } from '@components/common/TableCardBody';
-import { Account, useFetchAccountInfo } from '@providers/accounts';
-import { displayTimestamp } from '@utils/date';
-import { VoteAccount } from '@validators/accounts/vote';
+import {AccountAddressRow, AccountBalanceRow, AccountHeader} from '@components/common/Account';
+import {Address} from '@components/common/Address';
+import {Slot} from '@components/common/Slot';
+import {TableCardBody} from '@components/common/TableCardBody';
+import {Account, useFetchAccountInfo} from '@providers/accounts';
+import {displayTimestamp} from '@utils/date';
+import {VoteAccount} from '@utils/validators/accounts/vote';
 import React from 'react';
 
 export function VoteAccountSection({ account, voteAccount }: { account: Account; voteAccount: VoteAccount }) {

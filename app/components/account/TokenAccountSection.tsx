@@ -1,26 +1,26 @@
-import { Address } from '@components/common/Address';
-import { Copyable } from '@components/common/Copyable';
-import { LoadingCard } from '@components/common/LoadingCard';
-import { TableCardBody } from '@components/common/TableCardBody';
-import { Account, NFTData, TokenProgramData, useFetchAccountInfo } from '@providers/accounts';
+import {Address} from '@components/common/Address';
+import {Copyable} from '@components/common/Copyable';
+import {LoadingCard} from '@components/common/LoadingCard';
+import {TableCardBody} from '@components/common/TableCardBody';
+import {Account, NFTData, TokenProgramData, useFetchAccountInfo} from '@providers/accounts';
 import isMetaplexNFT from '@providers/accounts/utils/isMetaplexNFT';
-import { useCluster } from '@providers/cluster';
-import { PublicKey } from '@solana/web3.js';
-import { Cluster } from '@utils/cluster';
-import { CoingeckoStatus, useCoinGecko } from '@utils/coingecko';
-import { displayTimestampWithoutDate } from '@utils/date';
-import { abbreviatedNumber, normalizeTokenAmount } from '@utils/index';
-import { addressLabel } from '@utils/tx';
-import { MintAccountInfo, MultisigAccountInfo, TokenAccount, TokenAccountInfo } from '@validators/accounts/token';
-import { BigNumber } from 'bignumber.js';
-import { useEffect, useMemo, useState } from 'react';
-import { ExternalLink, RefreshCw } from 'react-feather';
-import { create } from 'superstruct';
+import {useCluster} from '@providers/cluster';
+import {PublicKey} from '@solana/web3.js';
+import {Cluster} from '@utils/cluster';
+import {CoingeckoStatus, useCoinGecko} from '@utils/coingecko';
+import {displayTimestampWithoutDate} from '@utils/date';
+import {abbreviatedNumber, normalizeTokenAmount} from '@utils/index';
+import {addressLabel} from '@utils/tx';
+import {MintAccountInfo, MultisigAccountInfo, TokenAccount, TokenAccountInfo} from '@utils/validators/accounts/token';
+import {BigNumber} from 'bignumber.js';
+import {useEffect, useMemo, useState} from 'react';
+import {ExternalLink, RefreshCw} from 'react-feather';
+import {create} from 'superstruct';
 import useSWR from 'swr';
 
-import { FullLegacyTokenInfo, getTokenInfo, getTokenInfoSwrKey } from '@/app/utils/token-info';
+import {FullLegacyTokenInfo, getTokenInfo, getTokenInfoSwrKey} from '@/app/utils/token-info';
 
-import { UnknownAccountCard } from './UnknownAccountCard';
+import {UnknownAccountCard} from './UnknownAccountCard';
 
 const getEthAddress = (link?: string) => {
     let address = '';
