@@ -70,3 +70,17 @@
     }
   }
 }
+
+.validator-stake {
+  width: 100px;
+
+  &--cummulative {
+    background: #14823f;
+    height: 66px;
+  }
+
+  &--activated {
+    background: $primary;
+    height: 66px;
+  }
+}
