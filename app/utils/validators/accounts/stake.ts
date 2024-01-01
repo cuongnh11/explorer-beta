@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 
-import { BigIntFromString } from '@validators/number';
-import { PublicKeyFromString } from '@validators/pubkey';
-import { enums, Infer, nullable, number, type } from 'superstruct';
+import {BigIntFromString} from '@utils/validators/number';
+import {PublicKeyFromString} from '@utils/validators/pubkey';
+import {enums, Infer, nullable, number, type} from 'superstruct';
 
 export type StakeAccountType = Infer<typeof StakeAccountType>;
 export const StakeAccountType = enums(['uninitialized', 'initialized', 'delegated', 'rewardsPool']);

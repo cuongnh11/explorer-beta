@@ -1,13 +1,13 @@
-import { Address } from '@components/common/Address';
-import { Epoch } from '@components/common/Epoch';
-import { SolBalance } from '@components/common/SolBalance';
-import { TableCardBody } from '@components/common/TableCardBody';
-import { Account, useFetchAccountInfo } from '@providers/accounts';
-import { StakeActivationData } from '@solana/web3.js';
-import { displayTimestampUtc } from '@utils/date';
-import { StakeAccountInfo, StakeAccountType, StakeMeta } from '@validators/accounts/stake';
+import {Address} from '@components/common/Address';
+import {Epoch} from '@components/common/Epoch';
+import {SolBalance} from '@components/common/SolBalance';
+import {TableCardBody} from '@components/common/TableCardBody';
+import {Account, useFetchAccountInfo} from '@providers/accounts';
+import {StakeActivationData} from '@solana/web3.js';
+import {displayTimestampUtc} from '@utils/date';
+import {StakeAccountInfo, StakeAccountType, StakeMeta} from '@utils/validators/accounts/stake';
 import React from 'react';
-import { RefreshCw } from 'react-feather';
+import {RefreshCw} from 'react-feather';
 
 const U64_MAX = BigInt('0xffffffffffffffff');
 

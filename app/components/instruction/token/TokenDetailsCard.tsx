@@ -1,18 +1,18 @@
-import { Address } from '@components/common/Address';
-import { useFetchAccountInfo, useMintAccountInfo, useTokenAccountInfo } from '@providers/accounts';
-import { ParsedInstruction, ParsedTransaction, PublicKey, SignatureResult } from '@solana/web3.js';
-import { normalizeTokenAmount } from '@utils/index';
-import { ParsedInfo } from '@validators/index';
+import {Address} from '@components/common/Address';
+import {useFetchAccountInfo, useMintAccountInfo, useTokenAccountInfo} from '@providers/accounts';
+import {ParsedInstruction, ParsedTransaction, PublicKey, SignatureResult} from '@solana/web3.js';
+import {normalizeTokenAmount} from '@utils/index';
+import {ParsedInfo} from '@utils/validators/index';
 import React from 'react';
-import { create } from 'superstruct';
+import {create} from 'superstruct';
 import useSWR from 'swr';
 
-import { useCluster } from '@/app/providers/cluster';
-import { Cluster } from '@/app/utils/cluster';
-import { getTokenInfo, getTokenInfoSwrKey } from '@/app/utils/token-info';
+import {useCluster} from '@/app/providers/cluster';
+import {Cluster} from '@/app/utils/cluster';
+import {getTokenInfo, getTokenInfoSwrKey} from '@/app/utils/token-info';
 
-import { InstructionCard } from '../InstructionCard';
-import { IX_STRUCTS, IX_TITLES, TokenAmountUi, TokenInstructionType } from './types';
+import {InstructionCard} from '../InstructionCard';
+import {IX_STRUCTS, IX_TITLES, TokenAmountUi, TokenInstructionType} from './types';
 
 type DetailsProps = {
     tx: ParsedTransaction;

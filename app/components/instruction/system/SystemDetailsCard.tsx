@@ -1,21 +1,21 @@
-import { ParsedInstruction, ParsedTransaction, SignatureResult } from '@solana/web3.js';
-import { ParsedInfo } from '@validators/index';
+import {ParsedInstruction, ParsedTransaction, SignatureResult} from '@solana/web3.js';
+import {ParsedInfo} from '@utils/validators/index';
 import React from 'react';
-import { create } from 'superstruct';
+import {create} from 'superstruct';
 
-import { UnknownDetailsCard } from '../UnknownDetailsCard';
-import { AllocateDetailsCard } from './AllocateDetailsCard';
-import { AllocateWithSeedDetailsCard } from './AllocateWithSeedDetailsCard';
-import { AssignDetailsCard } from './AssignDetailsCard';
-import { AssignWithSeedDetailsCard } from './AssignWithSeedDetailsCard';
-import { CreateDetailsCard } from './CreateDetailsCard';
-import { CreateWithSeedDetailsCard } from './CreateWithSeedDetailsCard';
-import { NonceAdvanceDetailsCard } from './NonceAdvanceDetailsCard';
-import { NonceAuthorizeDetailsCard } from './NonceAuthorizeDetailsCard';
-import { NonceInitializeDetailsCard } from './NonceInitializeDetailsCard';
-import { NonceWithdrawDetailsCard } from './NonceWithdrawDetailsCard';
-import { TransferDetailsCard } from './TransferDetailsCard';
-import { TransferWithSeedDetailsCard } from './TransferWithSeedDetailsCard';
+import {UnknownDetailsCard} from '../UnknownDetailsCard';
+import {AllocateDetailsCard} from './AllocateDetailsCard';
+import {AllocateWithSeedDetailsCard} from './AllocateWithSeedDetailsCard';
+import {AssignDetailsCard} from './AssignDetailsCard';
+import {AssignWithSeedDetailsCard} from './AssignWithSeedDetailsCard';
+import {CreateDetailsCard} from './CreateDetailsCard';
+import {CreateWithSeedDetailsCard} from './CreateWithSeedDetailsCard';
+import {NonceAdvanceDetailsCard} from './NonceAdvanceDetailsCard';
+import {NonceAuthorizeDetailsCard} from './NonceAuthorizeDetailsCard';
+import {NonceInitializeDetailsCard} from './NonceInitializeDetailsCard';
+import {NonceWithdrawDetailsCard} from './NonceWithdrawDetailsCard';
+import {TransferDetailsCard} from './TransferDetailsCard';
+import {TransferWithSeedDetailsCard} from './TransferWithSeedDetailsCard';
 import {
     AdvanceNonceInfo,
     AllocateInfo,
@@ -31,7 +31,7 @@ import {
     UpgradeNonceInfo,
     WithdrawNonceInfo,
 } from './types';
-import { UpgradeNonceDetailsCard } from './UpgradeNonceDetailsCard';
+import {UpgradeNonceDetailsCard} from './UpgradeNonceDetailsCard';
 
 type DetailsProps = {
     tx: ParsedTransaction;

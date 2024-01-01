@@ -1,7 +1,7 @@
-import { PublicKey } from '@solana/web3.js';
-import { fromProgramData } from '@utils/security-txt';
-import { useClusterPath } from '@utils/url';
-import { ProgramDataAccountInfo } from '@validators/accounts/upgradeable-program';
+import {PublicKey} from '@solana/web3.js';
+import {fromProgramData} from '@utils/security-txt';
+import {useClusterPath} from '@utils/url';
+import {ProgramDataAccountInfo} from '@utils/validators/accounts/upgradeable-program';
 import Link from 'next/link';
 
 export function SecurityTXTBadge({ programData, pubkey }: { programData: ProgramDataAccountInfo; pubkey: PublicKey }) {

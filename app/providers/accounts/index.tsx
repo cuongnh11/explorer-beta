@@ -1,10 +1,10 @@
 'use client';
 
-import { MetadataJson, programs } from '@metaplex/js';
-import getEditionInfo, { EditionInfo } from '@providers/accounts/utils/getEditionInfo';
+import {MetadataJson, programs} from '@metaplex/js';
+import getEditionInfo, {EditionInfo} from '@providers/accounts/utils/getEditionInfo';
 import * as Cache from '@providers/cache';
-import { ActionType, FetchStatus } from '@providers/cache';
-import { useCluster } from '@providers/cluster';
+import {ActionType, FetchStatus} from '@providers/cache';
+import {useCluster} from '@providers/cluster';
 import {
     AddressLookupTableAccount,
     AddressLookupTableProgram,
@@ -14,27 +14,28 @@ import {
     StakeActivationData,
     SystemProgram,
 } from '@solana/web3.js';
-import { Cluster } from '@utils/cluster';
-import { pubkeyToString } from '@utils/index';
-import { ParsedAddressLookupTableAccount } from '@validators/accounts/address-lookup-table';
-import { ConfigAccount } from '@validators/accounts/config';
-import { NonceAccount } from '@validators/accounts/nonce';
-import { StakeAccount } from '@validators/accounts/stake';
-import { SysvarAccount } from '@validators/accounts/sysvar';
-import { MintAccountInfo, TokenAccount, TokenAccountInfo } from '@validators/accounts/token';
+import {Cluster} from '@utils/cluster';
+import {pubkeyToString} from '@utils/index';
+import {ParsedAddressLookupTableAccount} from '@utils/validators/accounts/address-lookup-table';
+import {ConfigAccount} from '@utils/validators/accounts/config';
+import {NonceAccount} from '@utils/validators/accounts/nonce';
+import {StakeAccount} from '@utils/validators/accounts/stake';
+import {SysvarAccount} from '@utils/validators/accounts/sysvar';
+import {MintAccountInfo, TokenAccount, TokenAccountInfo} from '@utils/validators/accounts/token';
 import {
     ProgramDataAccount,
     ProgramDataAccountInfo,
     UpgradeableLoaderAccount,
-} from '@validators/accounts/upgradeable-program';
-import { VoteAccount } from '@validators/accounts/vote';
-import { ParsedInfo } from '@validators/index';
+} from '@utils/validators/accounts/upgradeable-program';
+import {VoteAccount} from '@utils/validators/accounts/vote';
+import {ParsedInfo} from '@utils/validators/index';
 import React from 'react';
-import { create } from 'superstruct';
+import {create} from 'superstruct';
 
-import { HistoryProvider } from './history';
-import { RewardsProvider } from './rewards';
-import { TokensProvider } from './tokens';
+import {HistoryProvider} from './history';
+import {RewardsProvider} from './rewards';
+import {TokensProvider} from './tokens';
+
 export { useAccountHistory } from './history';
 
 const Metadata = programs.metadata.Metadata;

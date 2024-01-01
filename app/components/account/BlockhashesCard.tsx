@@ -1,4 +1,4 @@
-import { RecentBlockhashesEntry, RecentBlockhashesInfo } from '@validators/accounts/sysvar';
+import {RecentBlockhashesEntry, RecentBlockhashesInfo} from '@utils/validators/accounts/sysvar';
 import React from 'react';
 
 export function BlockhashesCard({ blockhashes }: { blockhashes: RecentBlockhashesInfo }) {

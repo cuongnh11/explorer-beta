@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 
-import { ParsedInfo } from '@validators/index';
-import { PublicKeyFromString } from '@validators/pubkey';
-import { any, coerce, create, Infer, literal, nullable, number, string, tuple, type, union } from 'superstruct';
+import {ParsedInfo} from '@utils/validators';
+import {PublicKeyFromString} from '@utils/validators/pubkey';
+import {any, coerce, create, Infer, literal, nullable, number, string, tuple, type, union} from 'superstruct';
 
 export type ProgramAccountInfo = Infer<typeof ProgramAccountInfo>;
 export const ProgramAccountInfo = type({

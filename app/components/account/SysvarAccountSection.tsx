@@ -1,9 +1,9 @@
-import { AccountAddressRow, AccountBalanceRow, AccountHeader } from '@components/common/Account';
-import { Epoch } from '@components/common/Epoch';
-import { Slot } from '@components/common/Slot';
-import { TableCardBody } from '@components/common/TableCardBody';
-import { Account, useFetchAccountInfo } from '@providers/accounts';
-import { displayTimestamp } from '@utils/date';
+import {AccountAddressRow, AccountBalanceRow, AccountHeader} from '@components/common/Account';
+import {Epoch} from '@components/common/Epoch';
+import {Slot} from '@components/common/Slot';
+import {TableCardBody} from '@components/common/TableCardBody';
+import {Account, useFetchAccountInfo} from '@providers/accounts';
+import {displayTimestamp} from '@utils/date';
 import {
     SysvarAccount,
     SysvarClockAccount,
@@ -15,7 +15,7 @@ import {
     SysvarSlotHashesAccount,
     SysvarSlotHistoryAccount,
     SysvarStakeHistoryAccount,
-} from '@validators/accounts/sysvar';
+} from '@utils/validators/accounts/sysvar';
 import React from 'react';
 
 export function SysvarAccountSection({ account, sysvarAccount }: { account: Account; sysvarAccount: SysvarAccount }) {

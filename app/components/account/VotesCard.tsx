@@ -1,5 +1,5 @@
-import { Slot } from '@components/common/Slot';
-import { Vote, VoteAccount } from '@validators/accounts/vote';
+import {Slot} from '@components/common/Slot';
+import {Vote, VoteAccount} from '@utils/validators/accounts/vote';
 import React from 'react';
 
 export function VotesCard({ voteAccount }: { voteAccount: VoteAccount }) {
