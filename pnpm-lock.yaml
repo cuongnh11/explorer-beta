@@ -41,6 +41,9 @@ dependencies:
   '@react-hook/previous':
     specifier: ^1.0.1
     version: 1.0.1(react@18.2.0)
+  '@renec-foundation/rpl-token-registry':
+    specifier: ^1.1.0
+    version: 1.1.0(encoding@0.1.13)
   '@solana/buffer-layout':
     specifier: ^3.0.0
     version: 3.0.0
@@ -2806,6 +2809,15 @@ packages:
       react: '>=16.8'
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /@renec-foundation/rpl-token-registry@1.1.0(encoding@0.1.13):
+    resolution: {integrity: sha512-ahijnopP+tVCresjx7GGuOruSTclO5I8VApn1tG3P1nYpPHS7ThwSDDvKuDdGBmrJrl20eZ6fmswAI5+4/gKxQ==}
+    engines: {node: '>=10'}
+    dependencies:
+      cross-fetch: 3.1.5(encoding@0.1.13)
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@rollup/plugin-babel@6.0.3(@babel/core@7.23.7):

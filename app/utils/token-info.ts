@@ -1,37 +1,10 @@
+import { TokenInfo,TokenListProvider } from '@renec-foundation/rpl-token-registry';
 import { PublicKey } from '@solana/web3.js';
 import { ChainId } from '@solflare-wallet/utl-sdk';
 
 import { Cluster } from './cluster';
-import { RENEC_HUB_PRODUCTION_V2_URL } from './constants';
 
-type TokenExtensions = {
-    readonly website?: string;
-    readonly bridgeContract?: string;
-    readonly assetContract?: string;
-    readonly address?: string;
-    readonly explorer?: string;
-    readonly twitter?: string;
-    readonly github?: string;
-    readonly medium?: string;
-    readonly tgann?: string;
-    readonly tggroup?: string;
-    readonly discord?: string;
-    readonly serumV3Usdt?: string;
-    readonly serumV3Usdc?: string;
-    readonly coingeckoId?: string;
-    readonly imageUrl?: string;
-    readonly description?: string;
-};
-export type FullLegacyTokenInfo = {
-    readonly chainId: number;
-    readonly address: string;
-    readonly name: string;
-    readonly decimals: number;
-    readonly symbol: string;
-    readonly logoURI?: string;
-    readonly tags?: string[];
-    readonly extensions?: TokenExtensions;
-};
+export type FullLegacyTokenInfo = TokenInfo;
 
 export interface FullTokenInfo extends FullLegacyTokenInfo {
     verified?: boolean;
@@ -47,49 +20,15 @@ export function getTokenInfoSwrKey(address: string, cluster: Cluster, connection
     return ['get-token-info', address, cluster, connectionUrl];
 }
 
-interface TokenListsResponse {
-    meta?: {
-        current_page: number;
-        next_page: number | null;
-        total_pages: number;
-        per_page: number;
-    };
-    tokens: FullLegacyTokenInfo[];
-}
-
-export const fetchTokensInfo = async (params: {
-    keyword?: string;
-    coin_addresses?: string[];
-    chainId: number;
-    page?: number;
-    per?: number;
-}): Promise<TokenListsResponse> => {
-    const query: any = {
-        ...params,
-        chainId: undefined,
-        chain_id: params.chainId === ChainId.TESTNET ? 'testnet' : 'mainnet',
-        coin_addresses: params.coin_addresses?.length ? params.coin_addresses.join(',') : undefined,
-        per: params.per || 20,
-    };
-
-    const queryString = Object.keys(query)
-    .filter(key => query[key] !== undefined)
-    .map(key => `${key}=${query[key]}`)
-    .join('&');
-
+export const fetchTokensInfo = async (addresses: string[], chainId: number): Promise<TokenInfo[]> => {
     try {
-        const resp = await fetch(`${RENEC_HUB_PRODUCTION_V2_URL}/token_lists?${queryString}`);
-        if (resp.ok) {
-            return await resp.json();
-        } else {
-            const text = await resp.text();
-            throw new Error(text);
-        }
+        const tokens = await new TokenListProvider().resolve();
+        const tokenList = tokens.filterByChainId(chainId).getList();
+
+      return tokenList.filter(item => addresses.includes(item.address));
     } catch (error) {
         console.log('fetchTokensInfo', error);
-        return {
-            tokens: [],
-        };
+        return [];
     }
 };
 
@@ -97,22 +36,14 @@ export async function getTokenInfo(address: PublicKey, cluster: Cluster): Promis
     const chainId = getChainId(cluster);
     if (!chainId) return undefined;
 
-    const data = await fetchTokensInfo({
-        chainId,
-        coin_addresses: [address.toBase58()],
-        per: 1,
-    });
-    return data.tokens?.[0];
+    const data = await fetchTokensInfo([address.toBase58()], chainId);
+    return data?.[0];
 }
 
 export async function getTokenInfos(addresses: PublicKey[], cluster: Cluster): Promise<FullTokenInfo[] | undefined> {
     const chainId = getChainId(cluster);
     if (!chainId) return undefined;
   
-    const data = await fetchTokensInfo({
-        chainId,
-        coin_addresses: addresses.map(item => item.toBase58()),
-        per: addresses.length,
-    });
-    return data.tokens;
+    const data = await fetchTokensInfo(addresses.map(item => item.toBase58()), chainId);
+    return data;
 }

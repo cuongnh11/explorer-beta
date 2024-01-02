@@ -3,8 +3,25 @@
 import * as Cache from '@providers/cache';
 import { ActionType, FetchStatus } from '@providers/cache';
 import { useCluster } from '@providers/cluster';
+import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { Connection, PublicKey } from '@solana/web3.js';
 import { Cluster } from '@utils/cluster';
 import React from 'react';
+import { create } from 'superstruct';
+
+import { TokenAccountInfo } from '@/app/validators/accounts/token';
+
+import { TokenInfoWithPubkey } from './tokens';
+
+function isCheckAccountBalance(api: string) {
+  try {
+    // check valid public key
+    new PublicKey(api);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 const PROOF_OF_ASSETS: {
     [cluster in Cluster]?: {
@@ -19,6 +36,17 @@ const PROOF_OF_ASSETS: {
     };
 } = {
     [Cluster.MainnetBeta]: {
+        '2kNzm2v6KR5dpzgavS2nssLV9RxogVP6py2S6doJEfuZ': [
+            {
+                // reVND
+                address: '977HycG4LHMYNw3Toe9y5dZuokTNJfWye3QaLyNV4zeH',
+                api: '977HycG4LHMYNw3Toe9y5dZuokTNJfWye3QaLyNV4zeH',
+                balanceField: '4Q89182juiadeFgGw3fupnrwnnDmBhf7e7fHWxnUP3S3',
+                decimals: 0,
+                link: '/address/977HycG4LHMYNw3Toe9y5dZuokTNJfWye3QaLyNV4zeH/tokens',
+                symbol: 'reUSD',
+            },
+        ],
         '4Q89182juiadeFgGw3fupnrwnnDmBhf7e7fHWxnUP3S3': [
             {
                 // reUSD
@@ -27,7 +55,18 @@ const PROOF_OF_ASSETS: {
                 balanceField: 'result',
                 decimals: 6,
                 link: 'https://etherscan.io/token/0xdac17f958d2ee523a2206206994597c13d831ec7?a=0x506bf5765f67eb3a5b8ab1419853cb87171509ff',
-                symbol: 'USDT'
+                symbol: 'USDT',
+            },
+        ],
+        BfSYryW6Q93iUKE4uNsUtAdxQT9uU4GSVg2si3outLk1: [
+            {
+                // reNGN
+                address: 'HaxxjjE7tneYL82oZH8b7bs5WmTyM2z1iDYpbrGX5nJj',
+                api: 'HaxxjjE7tneYL82oZH8b7bs5WmTyM2z1iDYpbrGX5nJj',
+                balanceField: '4Q89182juiadeFgGw3fupnrwnnDmBhf7e7fHWxnUP3S3',
+                decimals: 9,
+                link: '/address/HaxxjjE7tneYL82oZH8b7bs5WmTyM2z1iDYpbrGX5nJj/tokens',
+                symbol: 'reUSD',
             },
         ],
         GwGh3b7iNibT3gpGn6SwZA9xZme7Th4NZmuGVD75jpZL: [
@@ -38,7 +77,7 @@ const PROOF_OF_ASSETS: {
                 balanceField: 'result',
                 decimals: 18,
                 link: 'https://etherscan.io/address/0x506BF5765F67eB3a5B8AB1419853cb87171509Ff',
-                symbol: 'ETH'
+                symbol: 'ETH',
             },
         ],
         GwPQTMg3eMVpDTEE3daZDtGsBtNHBK3X47dbBJvXUzF4: [
@@ -49,7 +88,7 @@ const PROOF_OF_ASSETS: {
                 balanceField: '',
                 decimals: 8,
                 link: 'https://www.blockchain.com/explorer/addresses/btc/3CJZhg7LaAUpWMwpeDHrNAp5YzJTQBrax8',
-                symbol: 'BTC'
+                symbol: 'BTC',
             },
         ],
     },
@@ -102,13 +141,13 @@ export function ProofOfAssetsProvider({ children }: ProofOfAssetsProviderProps) 
 }
 
 function numberWithComma(value: string) {
-  let result = value;
-  if (result.includes(".")) {
-    result = result.replace(/\.?0+$/, "").replace(/\d(?=(\d{3})+\.)/g, "$&,");
-  } else {
-    result = result.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-  }
-  return result;
+    let result = value;
+    if (result.includes('.')) {
+        result = result.replace(/\.?0+$/, '').replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    } else {
+        result = result.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    }
+    return result;
 }
 
 async function fetchProofOfAssets(dispatch: Dispatch, tokenMint: string, cluster: Cluster, url: string) {
@@ -137,18 +176,40 @@ async function fetchProofOfAssets(dispatch: Dispatch, tokenMint: string, cluster
         const proofInfos = await Promise.all(
             infos.map(async info => {
                 try {
-                    const resp: any = await fetch(info.api);
-                    if (resp.ok) {
-                        const data = await resp.json();
-                        const balance = info.balanceField? data[info.balanceField]: data;
-                        const balanceUi = info.decimals && balance? Number(balance) / 10 ** info.decimals: 0;
-                        return {
+                    if (isCheckAccountBalance(info.api)) {
+                        const { value } = await new Connection(url, 'processed').getParsedTokenAccountsByOwner(new PublicKey(info.api), {
+                            programId: TOKEN_PROGRAM_ID,
+                        });
+    
+                        const tokens: TokenInfoWithPubkey[] = value.slice(0, 101).map(accountInfo => {
+                            const parsedInfo = accountInfo.account.data.parsed.info;
+                            const info = create(parsedInfo, TokenAccountInfo);
+                            return { info, pubkey: accountInfo.pubkey };
+                        });
+                        const findToken = tokens.find(token => token.info.mint.toBase58() === info.balanceField);
+                        if (findToken) {
+                          return {
                             address: info.address,
-                            balance: String(balance) || '0',
-                            balanceUI: numberWithComma(balanceUi.toString()),
+                            balance: findToken.info.tokenAmount.amount,
+                            balanceUI: findToken.info.tokenAmount.uiAmountString,
                             link: info.link,
                             symbol: info.symbol,
                         };
+                        }
+                    } else {
+                        const resp: any = await fetch(info.api);
+                        if (resp.ok) {
+                            const data = await resp.json();
+                            const balance = info.balanceField ? data[info.balanceField] : data;
+                            const balanceUi = info.decimals && balance ? Number(balance) / 10 ** info.decimals : 0;
+                            return {
+                                address: info.address,
+                                balance: String(balance) || '0',
+                                balanceUI: numberWithComma(balanceUi.toString()),
+                                link: info.link,
+                                symbol: info.symbol,
+                            };
+                        }
                     }
                 } catch (error) {
                     console.log('getProofOfAsset error:', error);

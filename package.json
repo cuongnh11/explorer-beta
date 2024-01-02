@@ -21,6 +21,7 @@
         "@project-serum/serum": "^0.13.61",
         "@react-hook/debounce": "^4.0.0",
         "@react-hook/previous": "^1.0.1",
+        "@renec-foundation/rpl-token-registry": "^1.1.0",
         "@solana/buffer-layout": "^3.0.0",
         "@solana/spl-account-compression": "^0.1.8",
         "@solana/spl-token": "^0.1.8",

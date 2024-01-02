@@ -17,7 +17,7 @@ export function ProofAddress({ address, link }: { address: string; link: string 
     const content = (
         <Copyable text={address} replaceText={alignRight}>
             <span className="font-monospace">
-                <Link href={link} target='_blank'>{address}</Link>
+                <Link href={link} target={link.startsWith('http')? '_blank': undefined}>{address}</Link>
             </span>
         </Copyable>
     );
