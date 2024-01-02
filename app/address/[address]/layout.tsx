@@ -400,7 +400,8 @@ export type MoreTabs =
     | 'anchor-program'
     | 'anchor-account'
     | 'entries'
-    | 'concurrent-merkle-tree';
+    | 'concurrent-merkle-tree'
+    | 'kyc';
 
 function MoreSection({ children, tabs }: { children: React.ReactNode; tabs: (JSX.Element | null)[] }) {
     return (
@@ -476,6 +477,11 @@ function getTabs(pubkey: PublicKey, account: Account): TabComponent[] {
             path: 'domains',
             slug: 'domains',
             title: 'Domains',
+        });
+        tabs.push({
+            path: 'kyc',
+            slug: 'kyc',
+            title: 'KYC',
         });
     }
 
