@@ -38,6 +38,7 @@ import {TokensProvider} from './tokens';
 
 export { useAccountHistory } from './history';
 import { TokenHoldersProvider } from './holders';
+import { ProofOfAssetsProvider } from './proof-of-assets';
 
 const Metadata = programs.metadata.Metadata;
 
@@ -179,7 +180,9 @@ export function AccountsProvider({ children }: AccountsProviderProps) {
                         <HistoryProvider>
                             <RewardsProvider>
                                 <TokenHoldersProvider>
-                                    {children}
+                                    <ProofOfAssetsProvider>
+                                        {children}
+                                    </ProofOfAssetsProvider>
                                 </TokenHoldersProvider>
                             </RewardsProvider>
                         </HistoryProvider>

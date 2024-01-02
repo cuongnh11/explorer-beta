@@ -1,35 +1,7 @@
-import { ParsedTransactionWithMeta } from '@solana/web3.js';
 import { fetch } from 'cross-fetch';
 import { useEffect, useState } from 'react';
 
 import { Cluster } from '@/app/utils/cluster';
-
-export type MintDetails = {
-    decimals: number;
-    mint: string;
-};
-
-export function extractMintDetails(transactionWithMeta: ParsedTransactionWithMeta, mintMap: Map<string, MintDetails>) {
-    if (transactionWithMeta.meta?.preTokenBalances) {
-        transactionWithMeta.meta.preTokenBalances.forEach(balance => {
-            const account = transactionWithMeta.transaction.message.accountKeys[balance.accountIndex];
-            mintMap.set(account.pubkey.toBase58(), {
-                decimals: balance.uiTokenAmount.decimals,
-                mint: balance.mint,
-            });
-        });
-    }
-
-    if (transactionWithMeta.meta?.postTokenBalances) {
-        transactionWithMeta.meta.postTokenBalances.forEach(balance => {
-            const account = transactionWithMeta.transaction.message.accountKeys[balance.accountIndex];
-            mintMap.set(account.pubkey.toBase58(), {
-                decimals: balance.uiTokenAmount.decimals,
-                mint: balance.mint,
-            });
-        });
-    }
-}
 
 interface PriceInfo {
     [symbol: string]: number;
@@ -108,7 +80,7 @@ export const useTokenInfo = (tokenMint: string, cluster: Cluster) => {
                 .filter(key => query[key] !== undefined)
                 .map(key => `${key}=${query[key]}`)
                 .join('&');
-                const resp: any = await fetch(`https://hub.renec.foundation/api/v2/token_lists?${queryString}`);
+            const resp: any = await fetch(`https://hub.renec.foundation/api/v2/token_lists?${queryString}`);
             if (resp.ok) {
                 const tokens = await resp.json();
 
