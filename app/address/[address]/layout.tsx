@@ -43,7 +43,7 @@ import React, { PropsWithChildren } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import { Base58EncodedAddress } from 'web3js-experimental';
 
-import { FullTokenInfo, getFullTokenInfo } from '@/app/utils/token-info';
+import { FullTokenInfo, getTokenInfo } from '@/app/utils/token-info';
 
 const IDENTICON_WIDTH = 64;
 
@@ -146,8 +146,8 @@ const TOKEN_TABS_HIDDEN = ['spl-token:mint', 'config', 'vote', 'sysvar', 'config
 
 type Props = PropsWithChildren<{ params: { address: string } }>;
 
-async function fetchFullTokenInfo([_, pubkey, cluster, url]: ['get-full-token-info', string, Cluster, string]) {
-    return await getFullTokenInfo(new PublicKey(pubkey), cluster, url);
+async function fetchFullTokenInfo([_, pubkey, cluster]: ['get-full-token-info', string, Cluster]) {
+    return await getTokenInfo(new PublicKey(pubkey), cluster);
 }
 
 function AddressLayoutInner({ children, params: { address } }: Props) {

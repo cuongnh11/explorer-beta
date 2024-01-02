@@ -70,7 +70,7 @@ async function fetchAccountTokens(dispatch: Dispatch, pubkey: PublicKey, cluster
         });
 
         // Fetch symbols and logos for tokens
-        const tokenMintInfos = await getTokenInfos(tokens.map(t => t.info.mint), cluster, url);
+        const tokenMintInfos = await getTokenInfos(tokens.map(t => t.info.mint), cluster);
         if (tokenMintInfos) {
             const mappedTokenInfos = Object.fromEntries(tokenMintInfos.map(t => [t.address, {
                 logoURI: t.logoURI,

@@ -1,7 +1,9 @@
+import { PublicKey } from '@solana/web3.js';
 import { fetch } from 'cross-fetch';
 import { useEffect, useState } from 'react';
 
 import { Cluster } from '@/app/utils/cluster';
+import { FullTokenInfo, getTokenInfo } from '@/app/utils/token-info';
 
 interface PriceInfo {
     [symbol: string]: number;
@@ -45,49 +47,16 @@ export const useTokenPrices = () => {
     return { loadingTokenPrices, prices };
 };
 
-interface TokenInfo {
-    readonly chainId: string;
-    readonly address: string;
-    readonly name: string;
-    readonly decimals: number;
-    readonly symbol: string;
-    readonly logoURI?: string;
-    readonly tags?: string[];
-    readonly extensions?: any;
-}
-
 export const useTokenInfo = (tokenMint: string, cluster: Cluster) => {
-    const [tokenInfo, setTokenInfo] = useState<TokenInfo | null>(null);
+    const [tokenInfo, setTokenInfo] = useState<FullTokenInfo | null>(null);
     const [loadingTokenInfo, setLoadingTokenInfo] = useState(true);
 
     const refresh = async () => {
         try {
-            let chain_id;
-            if (cluster === Cluster.MainnetBeta) {
-                chain_id = 'mainnet';
-            } else if (cluster === Cluster.Testnet) {
-                chain_id = 'testnet';
-            }
-            if (!chain_id) throw new Error('Not support slug custom!');
-
             setLoadingTokenInfo(true);
-            const query: any = {
-                chain_id,
-                coin_addresses: [tokenMint],
-                per: 1,
-            };
-            const queryString = Object.keys(query)
-                .filter(key => query[key] !== undefined)
-                .map(key => `${key}=${query[key]}`)
-                .join('&');
-            const resp: any = await fetch(`https://hub.renec.foundation/api/v2/token_lists?${queryString}`);
-            if (resp.ok) {
-                const tokens = await resp.json();
+            const tokenInfo = await getTokenInfo(new PublicKey(tokenMint), cluster);
 
-                setTokenInfo(tokens?.tokens?.[0]);
-            } else {
-                setTokenInfo(null);
-            }
+            setTokenInfo(tokenInfo || null);
         } catch (error) {
             console.log(`Error at getTokenInfo: ${error}`);
             setTokenInfo(null);
