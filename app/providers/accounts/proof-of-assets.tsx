@@ -6,10 +6,9 @@ import { useCluster } from '@providers/cluster';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Cluster } from '@utils/cluster';
+import { TokenAccountInfo } from '@utils/validators/accounts/token';
 import React from 'react';
 import { create } from 'superstruct';
-
-import { TokenAccountInfo } from '@/app/validators/accounts/token';
 
 import { TokenInfoWithPubkey } from './tokens';
 
