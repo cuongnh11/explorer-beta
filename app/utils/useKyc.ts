@@ -21,10 +21,7 @@ export function useKycInfo(address: string) {
     const getKycInfo = async () => {
         try {
             setLoadingKycInfo(true);
-            const response = await fetch(
-                `
-                ${RENEC_HUB_PRODUCTION_URL}/kyc_verifications/kyc_data?wallet_address=${address}`
-            );
+            const response = await fetch(`${RENEC_HUB_PRODUCTION_URL}/kyc_verifications/kyc_data?wallet_address=${address}`);
             if (!response.ok) {
                 const text = await response.text();
                 throw new Error(text);
