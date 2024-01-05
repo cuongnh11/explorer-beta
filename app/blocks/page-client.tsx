@@ -9,6 +9,7 @@ import {useCluster} from "@providers/cluster";
 import {Connection, PublicKey} from "@solana/web3.js";
 import {displayTimestampUtc} from "@utils/date";
 import {useEffect, useState} from "react";
+import {Repeat} from 'react-feather'
 
 const FETCH_BLOCK_NUMBER = 20;
 
@@ -169,7 +170,7 @@ const BlockPageClient = () => {
     return (
         <div className="mt-4 mb-4">
             <div className="mb-3" onClick={retry}>
-                Recent blocks <i className="fe fe-repeat text-primary" />
+                Recent blocks <Repeat className="text-primary" size={18} />
             </div>
             {render()}
         </div>
