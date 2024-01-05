@@ -357,8 +357,8 @@ function NonFungibleTokenMintAccountCard({
     );
 }
 
-async function fetchTokenInfo([_, address, cluster, url]: ['get-token-info', string, Cluster, string]) {
-    return await getTokenInfo(new PublicKey(address), cluster, url);
+async function fetchTokenInfo([_, address, cluster]: ['get-token-info', string, Cluster]) {
+    return await getTokenInfo(new PublicKey(address), cluster);
 }
 
 function TokenAccountCard({ account, info }: { account: Account; info: TokenAccountInfo }) {

@@ -47,6 +47,45 @@ export function TokensProvider({ children }: ProviderProps) {
 
 export const TOKEN_PROGRAM_ID = new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
 
+export async function getAccountTokens(pubkey: PublicKey, cluster: Cluster, url: string) {
+    const { value } = await new Connection(url, 'processed').getParsedTokenAccountsByOwner(pubkey, {
+        programId: TOKEN_PROGRAM_ID,
+    });
+
+    const tokens: TokenInfoWithPubkey[] = value.slice(0, 101).map(accountInfo => {
+        const parsedInfo = accountInfo.account.data.parsed.info;
+        const info = create(parsedInfo, TokenAccountInfo);
+        return { info, pubkey: accountInfo.pubkey };
+    });
+
+    // Fetch symbols and logos for tokens
+    const tokenMintInfos = await getTokenInfos(
+        tokens.map(t => t.info.mint),
+        cluster
+    );
+    if (tokenMintInfos) {
+        const mappedTokenInfos = Object.fromEntries(
+            tokenMintInfos.map(t => [
+                t.address,
+                {
+                    logoURI: t.logoURI,
+                    name: t.name,
+                    symbol: t.symbol,
+                },
+            ])
+        );
+        tokens.forEach(t => {
+            const tokenInfo = mappedTokenInfos[t.info.mint.toString()];
+            if (tokenInfo) {
+                t.logoURI = tokenInfo.logoURI ?? undefined;
+                t.symbol = tokenInfo.symbol;
+                t.name = tokenInfo.name;
+            }
+        });
+    }
+    return tokens;
+}
+
 async function fetchAccountTokens(dispatch: Dispatch, pubkey: PublicKey, cluster: Cluster, url: string) {
     const key = pubkey.toBase58();
     dispatch({
@@ -59,36 +98,8 @@ async function fetchAccountTokens(dispatch: Dispatch, pubkey: PublicKey, cluster
     let status;
     let data;
     try {
-        const { value } = await new Connection(url, 'processed').getParsedTokenAccountsByOwner(pubkey, {
-            programId: TOKEN_PROGRAM_ID,
-        });
-
-        const tokens: TokenInfoWithPubkey[] = value.slice(0, 101).map(accountInfo => {
-            const parsedInfo = accountInfo.account.data.parsed.info;
-            const info = create(parsedInfo, TokenAccountInfo);
-            return { info, pubkey: accountInfo.pubkey };
-        });
-
-        // Fetch symbols and logos for tokens
-        const tokenMintInfos = await getTokenInfos(tokens.map(t => t.info.mint), cluster, url);
-        if (tokenMintInfos) {
-            const mappedTokenInfos = Object.fromEntries(tokenMintInfos.map(t => [t.address, {
-                logoURI: t.logoURI,
-                name: t.name,
-                symbol: t.symbol
-            }]))
-            tokens.forEach(t => {
-                const tokenInfo = mappedTokenInfos[t.info.mint.toString()]
-                if (tokenInfo) {
-                    t.logoURI = tokenInfo.logoURI ?? undefined;
-                    t.symbol = tokenInfo.symbol;
-                    t.name = tokenInfo.name;
-                }
-            })
-        }
-
         data = {
-            tokens
+            tokens: await getAccountTokens(pubkey, cluster, url),
         };
         status = FetchStatus.Fetched;
     } catch (error) {

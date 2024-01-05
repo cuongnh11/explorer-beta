@@ -43,7 +43,7 @@ import React, { PropsWithChildren } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import { Base58EncodedAddress } from 'web3js-experimental';
 
-import { FullTokenInfo, getFullTokenInfo } from '@/app/utils/token-info';
+import { FullTokenInfo, getTokenInfo } from '@/app/utils/token-info';
 
 const IDENTICON_WIDTH = 64;
 
@@ -146,8 +146,8 @@ const TOKEN_TABS_HIDDEN = ['spl-token:mint', 'config', 'vote', 'sysvar', 'config
 
 type Props = PropsWithChildren<{ params: { address: string } }>;
 
-async function fetchFullTokenInfo([_, pubkey, cluster, url]: ['get-full-token-info', string, Cluster, string]) {
-    return await getFullTokenInfo(new PublicKey(pubkey), cluster, url);
+async function fetchFullTokenInfo([_, pubkey, cluster]: ['get-full-token-info', string, Cluster]) {
+    return await getTokenInfo(new PublicKey(pubkey), cluster);
 }
 
 function AddressLayoutInner({ children, params: { address } }: Props) {
@@ -308,7 +308,9 @@ function DetailsSections({
     }
 
     const account = info.data;
-    const tabComponents = getTabs(pubkey, account).concat(getAnchorTabs(pubkey, account));
+    const parsedData = account?.data.parsed;
+    const isToken = parsedData?.program === 'spl-token' && parsedData?.parsed.type === 'mint';
+    const tabComponents = getTabs(pubkey, account, isToken).concat(getAnchorTabs(pubkey, account));
 
     if (tab && tabComponents.filter(tabComponent => tabComponent.tab.slug === tab).length === 0) {
         redirect(`/address/${address}`);
@@ -401,6 +403,8 @@ export type MoreTabs =
     | 'anchor-account'
     | 'entries'
     | 'concurrent-merkle-tree'
+    | 'holders'
+    | 'proof-of-assets'
     | 'kyc';
 
 function MoreSection({ children, tabs }: { children: React.ReactNode; tabs: (JSX.Element | null)[] }) {
@@ -418,7 +422,7 @@ function MoreSection({ children, tabs }: { children: React.ReactNode; tabs: (JSX
     );
 }
 
-function getTabs(pubkey: PublicKey, account: Account): TabComponent[] {
+function getTabs(pubkey: PublicKey, account: Account, isToken: boolean): TabComponent[] {
     const address = pubkey.toBase58();
     const parsedData = account.data.parsed;
     const tabs: Tab[] = [
@@ -488,6 +492,19 @@ function getTabs(pubkey: PublicKey, account: Account): TabComponent[] {
     if (account.owner.toBase58() === ACCOUNT_COMPRESSION_ID.toBase58()) {
         tabs.push(TABS_LOOKUP['spl-account-compression'][0]);
     }
+
+    if (isToken) {
+        tabs.push({
+            path: 'holders',
+            slug: 'holders',
+            title: 'Holders',
+        });
+        tabs.push({
+            path: 'proof-of-assets',
+            slug: 'proof-of-assets',
+            title: 'Proof of assets',
+        });
+    }  
 
     return tabs.map(tab => {
         return {
