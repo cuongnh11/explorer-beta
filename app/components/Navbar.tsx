@@ -14,6 +14,7 @@ export function Navbar() {
     const [collapse, setCollapse] = React.useState(false);
     const homePath = useClusterPath({pathname: '/'});
     const validatorsPath = useClusterPath({pathname: "/validators"})
+    const blocksPath = useClusterPath({pathname: "/blocks"})
     const supplyPath = useClusterPath({pathname: '/supply'});
     const transactionsPath = useClusterPath({pathname: '/transactions'});
     const inspectorPath = useClusterPath({pathname: '/tx/inspector'});
@@ -31,7 +32,7 @@ export function Navbar() {
                 </button>
 
                 <div className={`collapse navbar-collapse ms-auto me-4 ${collapse ? 'show' : ''}`}>
-                    <ul className="navbar-nav me-auto">
+                    <ul className="navbar-nav me-auto gap-2">
                         <li className="nav-item">
                             <Link
                                 className={`nav-link${selectedLayoutSegment === null ? ' active' : ''}`}
@@ -54,6 +55,14 @@ export function Navbar() {
                                 href={transactionsPath}
                             >
                                 Transactions
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link
+                                className={`nav-link${selectedLayoutSegment === 'blocks' ? ' active' : ''}`}
+                                href={blocksPath}
+                            >
+                                Blocks
                             </Link>
                         </li>
                         <li className="nav-item">
