@@ -172,7 +172,7 @@ const useRecentTransaction = () => {
                         <TransactionRow key={data.transaction.signatures[0]} data={data} />
                     ))}
                 </TableCardBody>
-                {transactions?.length && (
+                {!!transactions?.length && (
                     <Footer loadMore={loadMore} fetching={!fetched} />
                 )}
             </div>
