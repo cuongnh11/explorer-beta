@@ -1,6 +1,6 @@
+import { ChainId } from '@metaplex/js';
 import { TokenInfo,TokenListProvider } from '@renec-foundation/rpl-token-registry';
 import { PublicKey } from '@solana/web3.js';
-import { ChainId } from '@solflare-wallet/utl-sdk';
 
 import { Cluster } from './cluster';
 
@@ -11,8 +11,8 @@ export interface FullTokenInfo extends FullLegacyTokenInfo {
 }
 
 function getChainId(cluster: Cluster): ChainId | undefined {
-    if (cluster === Cluster.MainnetBeta) return ChainId.MAINNET;
-    else if (cluster === Cluster.Testnet) return ChainId.TESTNET;
+    if (cluster === Cluster.MainnetBeta) return ChainId.MainnetBeta;
+    else if (cluster === Cluster.Testnet) return ChainId.Testnet;
     else return undefined;
 }
 
