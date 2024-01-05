@@ -4,22 +4,20 @@ import Logo from '@img/logos/logo.png';
 import {useClusterPath} from '@utils/url';
 import Image from 'next/image';
 import Link from 'next/link';
-import {useSelectedLayoutSegment, useSelectedLayoutSegments} from 'next/navigation';
+import {useSelectedLayoutSegment} from 'next/navigation';
 import React from 'react';
 
 import {ClusterStatusButton} from './ClusterStatusButton';
 
 export function Navbar() {
-    // TODO: use `collapsing` to animate collapsible navbar
     const [collapse, setCollapse] = React.useState(false);
     const homePath = useClusterPath({pathname: '/'});
     const validatorsPath = useClusterPath({pathname: "/validators"})
     const blocksPath = useClusterPath({pathname: "/blocks"})
     const supplyPath = useClusterPath({pathname: '/supply'});
     const transactionsPath = useClusterPath({pathname: '/transactions'});
-    const inspectorPath = useClusterPath({pathname: '/tx/inspector'});
     const selectedLayoutSegment = useSelectedLayoutSegment();
-    const selectedLayoutSegments = useSelectedLayoutSegments();
+
     return (
         <nav className="navbar navbar-expand-md navbar-light">
             <div className="container">
@@ -71,18 +69,6 @@ export function Navbar() {
                                 href={supplyPath}
                             >
                                 Supply
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link
-                                className={`nav-link${
-                                    selectedLayoutSegments[0] === 'tx' && selectedLayoutSegments[1] === '(inspector)'
-                                        ? ' active'
-                                        : ''
-                                }`}
-                                href={inspectorPath}
-                            >
-                                Inspector
                             </Link>
                         </li>
                     </ul>
