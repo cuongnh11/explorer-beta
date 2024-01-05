@@ -1,13 +1,13 @@
 'use client';
-import { ErrorCard } from '@components/common/ErrorCard';
-import { LoadingCard } from '@components/common/LoadingCard';
-import { PublicKey } from '@solana/web3.js';
-import React, { useMemo } from 'react';
+import {ErrorCard} from '@components/common/ErrorCard';
+import {LoadingCard} from '@components/common/LoadingCard';
+import {PublicKey} from '@solana/web3.js';
+import React, {useMemo} from 'react';
 
-import { useKycInfo } from '@/app/utils/useKyc';
+import {useKycInfo} from '@/app/utils/useKyc';
 
-import { Address } from '../../common/Address';
-import { TableCardBody } from '../../common/TableCardBody';
+import {Address} from '../../common/Address';
+import {TableCardBody} from '../../common/TableCardBody';
 
 const defaultValue = 'N/A';
 
@@ -29,7 +29,7 @@ export function KycCard({ address }: { address: string }) {
             return <LoadingCard message="Loading KYC" />;
         }
 
-        return <ErrorCard retry={getKycInfo} text="Failed to fetch proof of assets" />;
+        return <ErrorCard retry={getKycInfo} text="Failed to fetch kyc information" />;
     }
 
     return (
