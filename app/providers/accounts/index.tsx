@@ -1,10 +1,10 @@
 'use client';
 
-import {MetadataJson, programs} from '@metaplex/js';
 import getEditionInfo, {EditionInfo} from '@providers/accounts/utils/getEditionInfo';
 import * as Cache from '@providers/cache';
 import {ActionType, FetchStatus} from '@providers/cache';
 import {useCluster} from '@providers/cluster';
+import {MetadataJson, programs} from '@renec-foundation/metaplex-js';
 import {
     AddressLookupTableAccount,
     AddressLookupTableProgram,
@@ -33,12 +33,12 @@ import React from 'react';
 import {create} from 'superstruct';
 
 import {HistoryProvider} from './history';
+import {TokenHoldersProvider} from './holders';
+import {ProofOfAssetsProvider} from './proof-of-assets';
 import {RewardsProvider} from './rewards';
 import {TokensProvider} from './tokens';
 
 export { useAccountHistory } from './history';
-import { TokenHoldersProvider } from './holders';
-import { ProofOfAssetsProvider } from './proof-of-assets';
 
 const Metadata = programs.metadata.Metadata;
 

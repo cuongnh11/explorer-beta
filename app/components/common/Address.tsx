@@ -1,18 +1,17 @@
 'use client';
 
-import { Connection, programs } from '@metaplex/js';
-import { useCluster } from '@providers/cluster';
-import { PublicKey } from '@solana/web3.js';
-import { displayAddress, TokenLabelInfo } from '@utils/tx';
-import { useClusterPath } from '@utils/url';
+import {useCluster} from '@providers/cluster';
+import {Connection, programs} from '@renec-foundation/metaplex-js';
+import {PublicKey} from '@solana/web3.js';
+import {displayAddress, TokenLabelInfo} from '@utils/tx';
+import {useClusterPath} from '@utils/url';
 import Link from 'next/link';
-import React from 'react';
-import { useState } from 'react';
+import React, {useState} from 'react';
 import useAsyncEffect from 'use-async-effect';
 
-import { getTokenInfo } from '@/app/utils/token-info';
+import {getTokenInfo} from '@/app/utils/token-info';
 
-import { Copyable } from './Copyable';
+import {Copyable} from './Copyable';
 
 type Props = {
     pubkey: PublicKey;

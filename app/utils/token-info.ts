@@ -1,8 +1,8 @@
-import { ChainId } from '@metaplex/js';
-import { TokenInfo,TokenListProvider } from '@renec-foundation/rpl-token-registry';
-import { PublicKey } from '@solana/web3.js';
+import {ChainId} from '@renec-foundation/metaplex-js';
+import {TokenInfo, TokenListProvider} from '@renec-foundation/rpl-token-registry';
+import {PublicKey} from '@solana/web3.js';
 
-import { Cluster } from './cluster';
+import {Cluster} from './cluster';
 
 export type FullLegacyTokenInfo = TokenInfo;
 
@@ -43,7 +43,7 @@ export async function getTokenInfo(address: PublicKey, cluster: Cluster): Promis
 export async function getTokenInfos(addresses: PublicKey[], cluster: Cluster): Promise<FullTokenInfo[] | undefined> {
     const chainId = getChainId(cluster);
     if (!chainId) return undefined;
-  
+
     const data = await fetchTokensInfo(addresses.map(item => item.toBase58()), chainId);
     return data;
 }
