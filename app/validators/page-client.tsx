@@ -11,6 +11,7 @@ import {Connection} from "@solana/web3.js";
 import axios from "axios";
 import orderBy from 'lodash/orderBy';
 import React, {useEffect, useMemo, useState} from "react";
+import {Code} from "react-feather";
 
 const OverallInformation = ({
                                  totalValidator,
@@ -36,6 +37,7 @@ const OverallInformation = ({
                     <div>superMinority: {superMinority}</div>
                 </div>
                 <div className="col-6 col-xl-3 mb-4 mb-xl-4">
+                    <div className="">Weighted Skip Rate</div>
                     <div className="">Weighted Skip Rate</div>
                     <h1 className="text-primary my-3">
                         {weightedSkipRate}%
@@ -74,14 +76,22 @@ const TableHeader = ({onChangeSort}: {
             <th>
                 <div className="d-flex gap-1">
                     <div>STAKE</div>
-                    <i onClick={() => onChangeSort("activatedStake")} style={{transform: "rotate(90deg)"}} className="fe fe-code" />
+                    <Code
+                        size={16}
+                        onClick={() => onChangeSort("activatedStake")}
+                        style={{transform: "rotate(90deg)"}}
+                    />
                 </div>
             </th>
             <th>CUMULATIVE STAKE</th>
             <th>
                 <div className="d-flex gap-1">
                     <div>COMMISSION</div>
-                    <i onClick={() => onChangeSort("commission")} style={{transform: "rotate(90deg)"}} className="fe fe-code" />
+                    <Code
+                        size={16}
+                        onClick={() => onChangeSort("commission")}
+                        style={{transform: "rotate(90deg)"}}
+                    />
                 </div>
             </th>
             <th>LAST VOTE</th>

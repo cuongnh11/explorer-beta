@@ -211,6 +211,9 @@ devDependencies:
   eslint-plugin-testing-library:
     specifier: ^5.10.3
     version: 5.10.3(eslint@8.39.0)(typescript@5.0.4)
+  husky:
+    specifier: ^8.0.3
+    version: 8.0.3
   jest:
     specifier: 29.5.0
     version: 29.5.0(@types/node@18.16.3)
@@ -2554,7 +2557,7 @@ packages:
   /@solana/rpc-transport@2.0.0-experimental.7adc22b(node-fetch@2.7.0)(ws@8.16.0):
     resolution: {integrity: sha512-kZu0dlaM4ag8xANxfDuIQFKgXy1MXcHTJyL6j2Kh0vNRlV3sYlZm11B7YdLjealD7Ox29A56pl+OM55A+BJ4KA==}
     peerDependencies:
-      node-fetch: ^2.6.7
+      node-fetch: ^2.6.9
       ws: ^8.14.0
     dependencies:
       node-fetch: 2.7.0(encoding@0.1.13)
@@ -5205,6 +5208,12 @@ packages:
       ms: 2.1.3
     dev: false
 
+  /husky@8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
+
   /iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
@@ -6413,6 +6422,7 @@ packages:
   /node-gyp-build@4.6.0:
     resolution: {integrity: sha512-NTZVKn9IylLwUzaKjkas1e4u2DLNcV4rdYagA4PWdPwW87Bi7z+BznyKSRwS/761tV/lzCGXplWsiaMjLqP2zQ==}
     hasBin: true
+    requiresBuild: true
 
   /node-int64@0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}

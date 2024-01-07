@@ -9,6 +9,7 @@ import {TableCardBody} from "@components/common/TableCardBody";
 import {useCluster} from "@providers/cluster";
 import {ConfirmedTransactionMeta, Connection, Message} from "@solana/web3.js";
 import {useEffect, useState} from "react";
+import {Repeat} from "react-feather";
 
 const Header = () => {
     return (
@@ -182,7 +183,7 @@ const useRecentTransaction = () => {
     return (
         <div className="mt-4 mb-4 transaction-card">
             <div className="mb-3 cursor-pointer" onClick={retry}>
-                Recent transactions <i className="fe fe-repeat text-primary" />
+                Recent transactions <Repeat size={18} className="text-primary" />
             </div>
             {render()}
         </div>

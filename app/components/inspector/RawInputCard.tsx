@@ -1,9 +1,10 @@
-import { VersionedMessage } from '@solana/web3.js';
+import {VersionedMessage} from '@solana/web3.js';
 import base58 from 'bs58';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import React from 'react';
+import {AlertCircle} from "react-feather";
 
-import type { TransactionData } from './InspectorPage';
+import type {TransactionData} from './InspectorPage';
 
 function deserializeTransaction(bytes: Uint8Array): {
     message: VersionedMessage;
@@ -144,7 +145,7 @@ export function RawInput({
                         {error && (
                             <>
                                 <span className="text-warning small me-2">
-                                    <i className="fe fe-alert-circle"></i>
+                                    <AlertCircle size={18} />
                                 </span>
 
                                 <span className="text-warning">{error}</span>

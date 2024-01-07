@@ -8,6 +8,7 @@ import {useCluster} from "@providers/cluster";
 import {useDashboardInfo} from "@providers/stats/solanaClusterStats";
 import {ConfirmedTransactionMeta, Connection, Message} from "@solana/web3.js";
 import React, {useEffect, useState} from "react";
+import {Repeat} from "react-feather";
 
 type TransactionResponse = {
     transaction: {
@@ -119,12 +120,8 @@ export const RecentTransactionsCard = () => {
 
     return (
         <div>
-            <div className="mb-3 d-flex align-items-center">
-                <div>Recent Transactions</div>
-                <div className="mx-1"/>
-                <div onClick={onRetry}>
-                    <i className="fe fe-repeat text-primary"/>
-                </div>
+            <div className="mb-3">
+                Recent Transactions <Repeat size={18} onClick={onRetry} className="text-primary"/>
             </div>
             {render()}
         </div>
