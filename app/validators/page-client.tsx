@@ -38,7 +38,6 @@ const OverallInformation = ({
                 </div>
                 <div className="col-6 col-xl-3 mb-4 mb-xl-4">
                     <div className="">Weighted Skip Rate</div>
-                    <div className="">Weighted Skip Rate</div>
                     <h1 className="text-primary my-3">
                         {weightedSkipRate}%
                     </h1>
