@@ -1,6 +1,7 @@
 'use client';
 
 import { useCluster } from '@providers/cluster';
+import { useLanguage } from '@providers/language-provider';
 import { Cluster } from '@utils/cluster';
 import bs58 from 'bs58';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -27,6 +28,7 @@ const hasDomainSyntax = (value: string) => {
 };
 
 export function SearchBar() {
+    const { t } = useLanguage();
     const [search, setSearch] = React.useState('');
     const selectRef = React.useRef<AsyncSelect<any> | null>(null);
     const router = useRouter();
@@ -75,7 +77,7 @@ export function SearchBar() {
                         ref={ref => (selectRef.current = ref)}
                         noOptionsMessage={() => 'No Results'}
                         loadingMessage={() => 'loading...'}
-                        placeholder="Search for blocks, accounts, transactions, programs, and tokens"
+                        placeholder={t('main_searchbar_title')}
                         value={resetValue}
                         inputValue={search}
                         blurInputOnSelect

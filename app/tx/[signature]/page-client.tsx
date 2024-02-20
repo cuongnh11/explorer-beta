@@ -15,6 +15,7 @@ import { ProgramLogSection } from '@components/transaction/ProgramLogSection';
 import { TokenBalancesCard } from '@components/transaction/TokenBalancesCard';
 import { FetchStatus } from '@providers/cache';
 import { useCluster } from '@providers/cluster';
+import { useLanguage } from '@providers/language-provider';
 import {
     TransactionStatusInfo,
     useFetchTransactionStatus,
@@ -58,7 +59,7 @@ function getTransactionErrorReason(
     tx: ParsedTransaction | undefined
 ): { errorReason: string; errorLink?: string } {
     if (typeof info.result.err === 'string') {
-        return { errorReason: `Runtime Error: "${info.result.err}"` };
+        return { errorReason: `Runtime Error: ${info.result.err}` };
     }
 
     const programError = getTransactionInstructionError(info.result.err);
@@ -79,6 +80,7 @@ function getTransactionErrorReason(
 }
 
 export default function TransactionDetailsPageClient({ params: { signature: raw } }: Props) {
+    const { t } = useLanguage();
     let signature: TransactionSignature | undefined;
 
     try {
@@ -119,16 +121,16 @@ export default function TransactionDetailsPageClient({ params: { signature: raw 
         <div className="container mt-n3">
             <div className="header">
                 <div className="header-body">
-                    <h6 className="header-pretitle">Details</h6>
-                    <h2 className="header-title">Transaction</h2>
+                    <h6 className="header-pretitle">{t('details')}</h6>
+                    <h2 className="header-title">{t('transaction')}</h2>
                 </div>
             </div>
             {signature === undefined ? (
-                <ErrorCard text={`Signature "${raw}" is not valid`} />
+                <ErrorCard text={t('signature_is_not_valid', { signature: raw })} />
             ) : (
                 <SignatureContext.Provider value={signature}>
                     <StatusCard signature={signature} autoRefresh={autoRefresh} />
-                    <Suspense fallback={<LoadingCard message="Loading transaction details" />}>
+                    <Suspense fallback={<LoadingCard message={t('loading_transaction_detail')} />}>
                         <DetailsSection signature={signature} />
                     </Suspense>
                 </SignatureContext.Provider>

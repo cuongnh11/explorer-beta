@@ -2,6 +2,7 @@
 
 import localeEn from '@locales/en';
 import localeVi from '@locales/vi';
+import { toLower } from 'lodash';
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 interface Translations {
@@ -22,15 +23,24 @@ const translations: Record<string, Translations> = {
 const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [language, setLanguage] = useState(localStorage.getItem('lang') || navigator?.language || 'en');
+    const [language, setLanguage] = useState(() => {
+        const localLang = toLower(localStorage.getItem('lang') || 'en');
+        if (['en', 'vi'].includes(localLang)) {
+            return localLang;
+        }
+        return 'en';
+    });
 
     const t: LanguageContextProps['t'] = (key, replacements) => {
-        let text = translations[language][key] || key;
+        let text = translations?.[language]?.[key] || key;
+
         if (replacements) {
-            Object.keys(replacements).forEach(replaceKey => {
-                text = text.replace(`{{${replaceKey}}}`, String(replacements[replaceKey]));
+            Object.entries(replacements).forEach(([replaceKey, replaceValue]) => {
+                const replaceRegex = new RegExp(`{{${replaceKey}}}`, 'g');
+                text = text.replace(replaceRegex, String(replaceValue));
             });
         }
+
         return text;
     };
 
