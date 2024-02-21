@@ -1,31 +1,28 @@
 'use client';
 
 import Logo from '@img/logos/logo.png';
-import { useLanguage } from '@providers/language-provider';
-import { useClusterPath } from '@utils/url';
+import {useClusterPath} from '@utils/url';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSelectedLayoutSegment } from 'next/navigation';
+import {useSelectedLayoutSegment} from 'next/navigation';
 import React from 'react';
 
-import { ClusterStatusButton } from './ClusterStatusButton';
-import ToggleLanguage from './ToggleLanguage';
+import {ClusterStatusButton} from './ClusterStatusButton';
 
 export function Navbar() {
     const [collapse, setCollapse] = React.useState(false);
-    const homePath = useClusterPath({ pathname: '/' });
-    const validatorsPath = useClusterPath({ pathname: '/validators' });
-    const blocksPath = useClusterPath({ pathname: '/blocks' });
-    const supplyPath = useClusterPath({ pathname: '/supply' });
-    const transactionsPath = useClusterPath({ pathname: '/transactions' });
+    const homePath = useClusterPath({pathname: '/'});
+    const validatorsPath = useClusterPath({pathname: "/validators"})
+    const blocksPath = useClusterPath({pathname: "/blocks"})
+    const supplyPath = useClusterPath({pathname: '/supply'});
+    const transactionsPath = useClusterPath({pathname: '/transactions'});
     const selectedLayoutSegment = useSelectedLayoutSegment();
-    const { t } = useLanguage();
 
     return (
         <nav className="navbar navbar-expand-md navbar-light">
             <div className="container">
                 <Link href={homePath}>
-                    <Image alt="RENEC Explorer" height={28} src={Logo} />
+                    <Image alt="RENEC Explorer" height={28} src={Logo}/>
                 </Link>
 
                 <button className="navbar-toggler" type="button" onClick={() => setCollapse(value => !value)}>
@@ -39,15 +36,15 @@ export function Navbar() {
                                 className={`nav-link${selectedLayoutSegment === null ? ' active' : ''}`}
                                 href={homePath}
                             >
-                                {t('dashboard')}
+                                Dashboard
                             </Link>
                         </li>
                         <li className="nav-item">
                             <Link
-                                className={`nav-link${selectedLayoutSegment === 'validators' ? ' active' : ''}`}
+                                className={`nav-link${selectedLayoutSegment === "validators" ? ' active' : ''}`}
                                 href={validatorsPath}
                             >
-                                {t('validators')}
+                                Validators
                             </Link>
                         </li>
                         <li className="nav-item">
@@ -55,7 +52,7 @@ export function Navbar() {
                                 className={`nav-link${selectedLayoutSegment === 'transactions' ? ' active' : ''}`}
                                 href={transactionsPath}
                             >
-                                {t('transactions')}
+                                Transactions
                             </Link>
                         </li>
                         <li className="nav-item">
@@ -63,7 +60,7 @@ export function Navbar() {
                                 className={`nav-link${selectedLayoutSegment === 'blocks' ? ' active' : ''}`}
                                 href={blocksPath}
                             >
-                                {t('blocks')}
+                                Blocks
                             </Link>
                         </li>
                         <li className="nav-item">
@@ -71,24 +68,14 @@ export function Navbar() {
                                 className={`nav-link${selectedLayoutSegment === 'supply' ? ' active' : ''}`}
                                 href={supplyPath}
                             >
-                                {t('supply')}
+                                Supply
                             </Link>
-                        </li>
-                        <li className="nav-item">
-                            <div className="d-md-none d-flex justify-content-start px-3">
-                                <ToggleLanguage />
-                            </div>
                         </li>
                     </ul>
                 </div>
 
                 <div className="d-none d-md-block">
-                    <div className="d-flex flex-row">
-                        <div className="me-3">
-                            <ClusterStatusButton />
-                        </div>
-                        <ToggleLanguage />
-                    </div>
+                    <ClusterStatusButton/>
                 </div>
             </div>
         </nav>
