@@ -1,12 +1,13 @@
 'use client';
 
-import {StatsNotReady} from '@components/StatsNotReady';
-import {ClusterStatsStatus, PERF_UPDATE_SEC, usePerformanceInfo} from '@providers/stats/solanaClusterStats';
-import {PerformanceInfo} from '@providers/stats/solanaPerformanceInfo';
-import {BarElement, CategoryScale, Chart, ChartData, ChartOptions, LinearScale, Tooltip} from 'chart.js';
+import { StatsNotReady } from '@components/StatsNotReady';
+import { useLanguage } from '@providers/language-provider';
+import { ClusterStatsStatus, PERF_UPDATE_SEC, usePerformanceInfo } from '@providers/stats/solanaClusterStats';
+import { PerformanceInfo } from '@providers/stats/solanaPerformanceInfo';
+import { BarElement, CategoryScale, Chart, ChartData, ChartOptions, LinearScale, Tooltip } from 'chart.js';
 import classNames from 'classnames';
 import React from 'react';
-import {Bar} from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import CountUp from 'react-countup';
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip);
@@ -34,19 +35,19 @@ export function LiveTransactionStatsCard() {
 
     return (
         <div className="card">
-            <TpsCardBody series={series} setSeries={setSeries}/>
+            <TpsCardBody series={series} setSeries={setSeries} />
         </div>
     );
 }
 
-function TpsCardBody({series, setSeries}: { series: Series; setSeries: SetSeries }) {
+function TpsCardBody({ series, setSeries }: { series: Series; setSeries: SetSeries }) {
     const performanceInfo = usePerformanceInfo();
 
     if (performanceInfo.status !== ClusterStatsStatus.Ready) {
-        return <StatsNotReady error={performanceInfo.status === ClusterStatsStatus.Error}/>;
+        return <StatsNotReady error={performanceInfo.status === ClusterStatsStatus.Error} />;
     }
 
-    return <TpsBarChart performanceInfo={performanceInfo} series={series} setSeries={setSeries}/>;
+    return <TpsBarChart performanceInfo={performanceInfo} series={series} setSeries={setSeries} />;
 }
 
 const TPS_CHART_OPTIONS = (historyMaxTps: number): ChartOptions<'bar'> => {
@@ -88,7 +89,7 @@ const TPS_CHART_OPTIONS = (historyMaxTps: number): ChartOptions<'bar'> => {
 
                     // Set Text
                     if (tooltipModel.body) {
-                        const {label, raw} = tooltipModel.dataPoints[0];
+                        const { label, raw } = tooltipModel.dataPoints[0];
                         const tooltipContent = tooltipEl.querySelector('div');
                         if (tooltipContent) {
                             let innerHtml = `<div class="value">${raw} TPS</div>`;
@@ -146,8 +147,9 @@ type TpsBarChartProps = {
     setSeries: SetSeries;
 };
 
-function TpsBarChart({performanceInfo, series, setSeries}: TpsBarChartProps) {
-    const {perfHistory, avgTps, historyMaxTps} = performanceInfo;
+function TpsBarChart({ performanceInfo, series, setSeries }: TpsBarChartProps) {
+    const { t } = useLanguage();
+    const { perfHistory, avgTps, historyMaxTps } = performanceInfo;
     const averageTps = Math.round(avgTps).toLocaleString('en-US');
     const seriesData = perfHistory[series];
     const chartOptions = React.useMemo<ChartOptions<'bar'>>(() => TPS_CHART_OPTIONS(historyMaxTps), [historyMaxTps]);
@@ -171,12 +173,12 @@ function TpsBarChart({performanceInfo, series, setSeries}: TpsBarChartProps) {
         <div className="card-body row">
             <div className="col-12 col-xl-3">
                 <div>
-                    <div className="mb-3">Current TPS</div>
+                    <div className="mb-3">{t('current_tps')}</div>
                     <h1 className="text-primary">{averageTps}</h1>
                 </div>
                 <div>
-                    <div className="mb-3">Total transactions</div>
-                    <AnimatedTransactionCount info={performanceInfo}/>
+                    <div className="mb-3">{t('total_transactions')}</div>
+                    <AnimatedTransactionCount info={performanceInfo} />
                 </div>
             </div>
             <div className="col-12 col-xl-9">
@@ -198,7 +200,7 @@ function TpsBarChart({performanceInfo, series, setSeries}: TpsBarChartProps) {
                     </div>
                     <div id="perf-history" className="mt-3 d-flex justify-content-end flex-row w-100">
                         <div className="w-100">
-                            <Bar data={chartData} options={chartOptions} height={80}/>
+                            <Bar data={chartData} options={chartOptions} height={80} />
                         </div>
                     </div>
                 </div>
@@ -207,12 +209,12 @@ function TpsBarChart({performanceInfo, series, setSeries}: TpsBarChartProps) {
     );
 }
 
-function AnimatedTransactionCount({info}: { info: PerformanceInfo }) {
+function AnimatedTransactionCount({ info }: { info: PerformanceInfo }) {
     const txCountRef = React.useRef(0);
-    const countUpRef = React.useRef({lastUpdate: 0, period: 0, start: 0});
+    const countUpRef = React.useRef({ lastUpdate: 0, period: 0, start: 0 });
     const countUp = countUpRef.current;
 
-    const {transactionCount, avgTps} = info;
+    const { transactionCount, avgTps } = info;
     const txCount = Number(transactionCount);
 
     // Track last tx count to reset count up options
@@ -250,7 +252,7 @@ function AnimatedTransactionCount({info}: { info: PerformanceInfo }) {
             useEasing={false}
             preserveValue={true}
             separator=","
-            style={{color: "#21D969", fontSize: "1.625rem"}}
+            style={{ color: '#21D969', fontSize: '1.625rem' }}
         />
     );
 }

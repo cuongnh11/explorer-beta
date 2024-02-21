@@ -25,7 +25,8 @@
             "@img/*": ["./app/img/*"],
             "@providers/*": ["./app/providers/*"],
             "@utils/*": ["./app/utils/*"],
-            "@validators/*": ["./app/validators/*"]
+            "@validators/*": ["./app/validators/*"],
+            "@locales/*": ["./app/locales/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

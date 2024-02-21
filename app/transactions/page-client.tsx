@@ -1,45 +1,45 @@
-"use client"
+'use client';
 
-import {ErrorCard} from "@components/common/ErrorCard";
-import {LoadingCard} from "@components/common/LoadingCard";
-import {Signature} from "@components/common/Signature";
-import {Slot} from "@components/common/Slot";
-import {SolBalance} from "@components/common/SolBalance";
-import {TableCardBody} from "@components/common/TableCardBody";
-import {useCluster} from "@providers/cluster";
-import {ConfirmedTransactionMeta, Connection, Message} from "@solana/web3.js";
-import {useEffect, useState} from "react";
-import {Repeat} from "react-feather";
+import { ErrorCard } from '@components/common/ErrorCard';
+import { LoadingCard } from '@components/common/LoadingCard';
+import { Signature } from '@components/common/Signature';
+import { Slot } from '@components/common/Slot';
+import { SolBalance } from '@components/common/SolBalance';
+import { TableCardBody } from '@components/common/TableCardBody';
+import { useCluster } from '@providers/cluster';
+import { useLanguage } from '@providers/language-provider';
+import { ConfirmedTransactionMeta, Connection, Message } from '@solana/web3.js';
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { Repeat } from 'react-feather';
 
 const Header = () => {
+    const { t } = useLanguage();
+
     return (
         <tr>
-            <th>SLOT</th>
-            <th>TRANSACTION HASH</th>
-            <th>STATUS</th>
-            <th>FEE</th>
-            <th>TIME</th>
+            <th>{t('slot').toUpperCase()}</th>
+            <th>{t('transaction_hash').toUpperCase()}</th>
+            <th>{t('status').toUpperCase()}</th>
+            <th>{t('fee').toUpperCase()}</th>
+            <th>{t('time').toUpperCase()}</th>
         </tr>
     );
 };
 
-const Footer = ({
-                    fetching,
-                    loadMore,
-                }: {
-    fetching: boolean;
-    loadMore: () => void;
-}) => {
+const Footer = ({ fetching, loadMore }: { fetching: boolean; loadMore: () => void }) => {
+    const { t } = useLanguage();
+
     return (
         <div className="card-footer">
             <button className="btn btn-primary w-100" onClick={() => loadMore()}>
                 {fetching ? (
                     <>
                         <span className="spinner-grow spinner-grow-sm me-2"></span>
-                        Loading transactions
+                        {t('loading_transactions')}
                     </>
                 ) : (
-                    "Load more"
+                    t('load_more')
                 )}
             </button>
         </div>
@@ -48,8 +48,8 @@ const Footer = ({
 
 const TransactionRow = ({ data }: { data: TransactionResponse }) => {
     const signature = data.transaction.signatures[0];
-    const statusText = data?.meta?.err ? "failed" : "success";
-    const statusClass = data?.meta?.err ? "warning" : "success";
+    const statusText = data?.meta?.err ? 'failed' : 'success';
+    const statusClass = data?.meta?.err ? 'warning' : 'success';
     const fee = data?.meta?.fee || 0;
 
     return (
@@ -64,9 +64,9 @@ const TransactionRow = ({ data }: { data: TransactionResponse }) => {
                 <span className={`badge bg-${statusClass}-soft`}>{statusText}</span>
             </td>
             <td>
-        <span>
-          <SolBalance lamports={fee} />
-        </span>
+                <span>
+                    <SolBalance lamports={fee} />
+                </span>
             </td>
             <td>{new Date(data.blockTime).toLocaleString()}</td>
         </tr>
@@ -101,23 +101,19 @@ const useRecentTransaction = () => {
     const [error, setError] = useState(false);
     const [fetched, setFetched] = useState(false);
     const { url } = useCluster();
-    const connection = new Connection(url, {commitment: "confirmed"})
+    const connection = new Connection(url, { commitment: 'confirmed' });
     const [transactions, setTransactions] = useState<BlockTransactionReponse>();
 
     const fetchTransaction = async (loadMode = false) => {
         try {
             loadMode ? setFetched(false) : setLoading(true);
             setError(false);
-            const epochInfo = await connection.getEpochInfo()
+            const epochInfo = await connection.getEpochInfo();
             lastSlot = lastSlot || Number(epochInfo.absoluteSlot);
             const dataResponse = await Promise.all(
-                [0, 1, 2].map((slotNumber) =>
-                    connection?.getBlock(lastSlot - slotNumber)
-                )
+                [0, 1, 2].map(slotNumber => connection?.getBlock(lastSlot - slotNumber))
             );
-            const data = dataResponse.map((el, index) =>
-                convertArray(el, lastSlot - index)
-            );
+            const data = dataResponse.map((el, index) => convertArray(el, lastSlot - index));
             currentTransactions = currentTransactions.concat(data.flat(1));
             lastSlot = lastSlot - 3;
 
@@ -154,28 +150,26 @@ const useRecentTransaction = () => {
     return { error, fetched, loadMore, loading, retry, transactions };
 };
 
- const ListTransactionsCard = () => {
-    const { transactions, retry, loading, loadMore, fetched, error } =
-        useRecentTransaction();
+const ListTransactionsCard = () => {
+    const { t } = useLanguage();
+    const { transactions, retry, loading, loadMore, fetched, error } = useRecentTransaction();
 
     const render = () => {
         if (error) {
-            return <ErrorCard retry={retry} text="Failed to fetch tratransactions" />;
+            return <ErrorCard retry={retry} text={t('failed_to_fetch_transaction')} />;
         }
         if (loading) {
-            return <LoadingCard message="Loading recent transactions" />;
+            return <LoadingCard message={t('loading_recent_transactions')} />;
         }
         return (
             <div className="card">
                 <TableCardBody>
                     <Header />
-                    {transactions?.map((data) => (
+                    {transactions?.map(data => (
                         <TransactionRow key={data.transaction.signatures[0]} data={data} />
                     ))}
                 </TableCardBody>
-                {!!transactions?.length && (
-                    <Footer loadMore={loadMore} fetching={!fetched} />
-                )}
+                {!!transactions?.length && <Footer loadMore={loadMore} fetching={!fetched} />}
             </div>
         );
     };
@@ -183,11 +177,11 @@ const useRecentTransaction = () => {
     return (
         <div className="mt-4 mb-4 transaction-card">
             <div className="mb-3 cursor-pointer" onClick={retry}>
-                Recent transactions <Repeat size={18} className="text-primary" />
+                {t('recent_transaction')} <Repeat size={18} className="text-primary" />
             </div>
             {render()}
         </div>
     );
 };
 
- export default ListTransactionsCard
+export default ListTransactionsCard;
