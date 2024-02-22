@@ -1,4 +1,5 @@
 import { Address } from '@components/common/Address';
+import { useLanguage } from '@providers/language-provider';
 import { useScrollAnchor } from '@providers/scroll-anchor';
 import { useFetchRawTransaction, useRawTransactionDetails } from '@providers/transactions/raw';
 import { ParsedInstruction, SignatureResult, TransactionInstruction } from '@solana/web3.js';
@@ -31,6 +32,7 @@ export function InstructionCard({
     innerCards,
     childIndex,
 }: InstructionProps) {
+    const { t } = useLanguage();
     const [resultClass] = ixResult(result, index);
     const [showRaw, setShowRaw] = React.useState(defaultRaw || false);
     const signature = useContext(SignatureContext);
@@ -70,7 +72,7 @@ export function InstructionCard({
                     className={`btn btn-sm d-flex align-items-center ${showRaw ? 'btn-black active' : 'btn-white'}`}
                     onClick={rawClickHandler}
                 >
-                    <Code className="me-2" size={13} /> Raw
+                    <Code className="me-2" size={13} /> {t('raw')}
                 </button>
             </div>
             <div className="table-responsive mb-0">
@@ -79,7 +81,7 @@ export function InstructionCard({
                         {showRaw ? (
                             <>
                                 <tr>
-                                    <td>Program</td>
+                                    <td>{t('program')}</td>
                                     <td className="text-lg-end">
                                         <Address pubkey={ix.programId} alignRight link />
                                     </td>
@@ -96,7 +98,7 @@ export function InstructionCard({
                         {innerCards && innerCards.length > 0 && (
                             <>
                                 <tr className="table-sep">
-                                    <td colSpan={3}>Inner Instructions</td>
+                                    <td colSpan={3}>{t('inner_instructions')}</td>
                                 </tr>
                                 <tr>
                                     <td colSpan={3}>

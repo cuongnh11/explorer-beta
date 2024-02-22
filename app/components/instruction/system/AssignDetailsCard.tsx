@@ -1,4 +1,5 @@
 import { Address } from '@components/common/Address';
+import { useLanguage } from '@providers/language-provider';
 import { ParsedInstruction, SignatureResult, SystemProgram } from '@solana/web3.js';
 import React from 'react';
 
@@ -13,6 +14,7 @@ export function AssignDetailsCard(props: {
     innerCards?: JSX.Element[];
     childIndex?: number;
 }) {
+    const { t } = useLanguage();
     const { ix, index, result, info, innerCards, childIndex } = props;
 
     return (
@@ -20,26 +22,26 @@ export function AssignDetailsCard(props: {
             ix={ix}
             index={index}
             result={result}
-            title="System Program: Assign Account"
+            title={t('system_program_assign_account')}
             innerCards={innerCards}
             childIndex={childIndex}
         >
             <tr>
-                <td>Program</td>
+                <td>{t('program')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={SystemProgram.programId} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Account Address</td>
+                <td>{t('account_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.account} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Assigned Program Id</td>
+                <td>{t('assigned_program_id')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.owner} alignRight link />
                 </td>

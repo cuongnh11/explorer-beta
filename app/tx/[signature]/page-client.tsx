@@ -54,31 +54,6 @@ type Props = Readonly<{
     params: SignatureProps;
 }>;
 
-function getTransactionErrorReason(
-    info: TransactionStatusInfo,
-    tx: ParsedTransaction | undefined
-): { errorReason: string; errorLink?: string } {
-    if (typeof info.result.err === 'string') {
-        return { errorReason: `Runtime Error: ${info.result.err}` };
-    }
-
-    const programError = getTransactionInstructionError(info.result.err);
-    if (programError !== undefined) {
-        return { errorReason: `Program Error: "Instruction #${programError.index + 1} Failed"` };
-    }
-
-    const { InsufficientFundsForRent } = info.result.err as { InsufficientFundsForRent?: { account_index: number } };
-    if (InsufficientFundsForRent !== undefined) {
-        if (tx) {
-            const address = tx.message.accountKeys[InsufficientFundsForRent.account_index].pubkey;
-            return { errorLink: `/address/${address}`, errorReason: `Insufficient Funds For Rent: ${address}` };
-        }
-        return { errorReason: `Insufficient Funds For Rent: Account #${InsufficientFundsForRent.account_index + 1}` };
-    }
-
-    return { errorReason: `Unknown Error: "${JSON.stringify(info.result.err)}"` };
-}
-
 export default function TransactionDetailsPageClient({ params: { signature: raw } }: Props) {
     const { t } = useLanguage();
     let signature: TransactionSignature | undefined;
@@ -140,6 +115,7 @@ export default function TransactionDetailsPageClient({ params: { signature: raw 
 }
 
 function StatusCard({ signature, autoRefresh }: SignatureProps & AutoRefreshProps) {
+    const { t } = useLanguage();
     const fetchStatus = useFetchTransactionStatus();
     const status = useTransactionStatus(signature);
     const details = useTransactionDetails(signature);
@@ -167,18 +143,20 @@ function StatusCard({ signature, autoRefresh }: SignatureProps & AutoRefreshProp
     if (!status || (status.status === FetchStatus.Fetching && autoRefresh === AutoRefresh.Inactive)) {
         return <LoadingCard />;
     } else if (status.status === FetchStatus.FetchFailed) {
-        return <ErrorCard retry={() => fetchStatus(signature)} text="Fetch Failed" />;
+        return <ErrorCard retry={() => fetchStatus(signature)} text={t('fetch_failed')} />;
     } else if (!status.data?.info) {
         if (clusterInfo && clusterInfo.firstAvailableBlock > 0) {
             return (
                 <ErrorCard
                     retry={() => fetchStatus(signature)}
-                    text="Not Found"
-                    subtext={`Note: Transactions processed before block ${clusterInfo.firstAvailableBlock} are not available at this time`}
+                    text={t('not_found')}
+                    subtext={t('transaction_processed_before_block', {
+                        block: clusterInfo.firstAvailableBlock.toString(),
+                    })}
                 />
             );
         }
-        return <ErrorCard retry={() => fetchStatus(signature)} text="Not Found" />;
+        return <ErrorCard retry={() => fetchStatus(signature)} text={t('not_found')} />;
     }
 
     const { info } = status.data;
@@ -201,6 +179,40 @@ function StatusCard({ signature, autoRefresh }: SignatureProps & AutoRefreshProp
             SystemInstruction.decodeInstructionType(ix) === 'AdvanceNonceAccount'
         );
     })();
+
+    const getTransactionErrorReason = (
+        info: TransactionStatusInfo,
+        tx: ParsedTransaction | undefined
+    ): { errorReason: string; errorLink?: string } => {
+        if (typeof info.result.err === 'string') {
+            return { errorReason: t('runtime_error', { error: info.result.err }) };
+        }
+
+        const programError = getTransactionInstructionError(info.result.err);
+        if (programError !== undefined) {
+            return { errorReason: t('program_error', { index: programError.index + 1 }) };
+        }
+
+        const { InsufficientFundsForRent } = info.result.err as {
+            InsufficientFundsForRent?: { account_index: number };
+        };
+        if (InsufficientFundsForRent !== undefined) {
+            if (tx) {
+                const address = tx.message.accountKeys[InsufficientFundsForRent.account_index].pubkey;
+                return {
+                    errorLink: `/address/${address}`,
+                    errorReason: t('insufficient_funds_for_rent', { address: address.toBase58() }),
+                };
+            }
+            return {
+                errorReason: t('insufficient_funds_for_rent_account', {
+                    index: InsufficientFundsForRent.account_index + 1,
+                }),
+            };
+        }
+
+        return { errorReason: t('unknown_error', { error: JSON.stringify(info.result.err) }) };
+    };
 
     let statusClass = 'success';
     let statusText = 'Success';
@@ -227,31 +239,31 @@ function StatusCard({ signature, autoRefresh }: SignatureProps & AutoRefreshProp
     return (
         <div className="card">
             <div className="card-header align-items-center">
-                <h3 className="card-header-title">Overview</h3>
+                <h3 className="card-header-title">{t('overview')}</h3>
                 <Link className="btn btn-white btn-sm me-2" href={inspectPath}>
                     <Settings className="align-text-top me-2" size={13} />
-                    Inspect
+                    {t('inspect')}
                 </Link>
                 {autoRefresh === AutoRefresh.Active ? (
                     <span className="spinner-grow spinner-grow-sm"></span>
                 ) : (
                     <button className="btn btn-white btn-sm" onClick={() => fetchStatus(signature)}>
                         <RefreshCw className="align-text-top me-2" size={13} />
-                        Refresh
+                        {t('refresh')}
                     </button>
                 )}
             </div>
 
             <TableCardBody>
                 <tr>
-                    <td>Signature</td>
+                    <td>{t('signature')}</td>
                     <td className="text-lg-end">
                         <Signature signature={signature} alignRight />
                     </td>
                 </tr>
 
                 <tr>
-                    <td>Result</td>
+                    <td>{t('result')}</td>
                     <td className="text-lg-end">
                         <h3 className="mb-0">
                             <span className={`badge bg-${statusClass}-soft`}>{statusText}</span>
@@ -261,7 +273,7 @@ function StatusCard({ signature, autoRefresh }: SignatureProps & AutoRefreshProp
 
                 {errorReason !== undefined && (
                     <tr>
-                        <td>Error</td>
+                        <td>{t('error')}</td>
                         <td className="text-lg-end">
                             <h3 className="mb-0">
                                 {errorLink !== undefined ? (
@@ -277,30 +289,30 @@ function StatusCard({ signature, autoRefresh }: SignatureProps & AutoRefreshProp
                 )}
 
                 <tr>
-                    <td>Timestamp</td>
+                    <td>{t('timestamp')}</td>
                     <td className="text-lg-end">
                         {info.timestamp !== 'unavailable' ? (
                             <span className="font-monospace">{displayTimestamp(info.timestamp * 1000)}</span>
                         ) : (
-                            <InfoTooltip bottom right text="Timestamps are only available for confirmed blocks">
-                                Unavailable
+                            <InfoTooltip bottom right text={t('timestamp_tool_tip')}>
+                                {t('unavailable')}
                             </InfoTooltip>
                         )}
                     </td>
                 </tr>
 
                 <tr>
-                    <td>Confirmation Status</td>
+                    <td>{t('confirmation_status')}</td>
                     <td className="text-lg-end text-uppercase">{info.confirmationStatus || 'Unknown'}</td>
                 </tr>
 
                 <tr>
-                    <td>Confirmations</td>
+                    <td>{t('confirmations')}</td>
                     <td className="text-lg-end text-uppercase">{info.confirmations}</td>
                 </tr>
 
                 <tr>
-                    <td>Slot</td>
+                    <td>{t('slot')}</td>
                     <td className="text-lg-end">
                         <Slot slot={info.slot} link />
                     </td>
@@ -312,9 +324,7 @@ function StatusCard({ signature, autoRefresh }: SignatureProps & AutoRefreshProp
                             {isNonce ? (
                                 'Nonce'
                             ) : (
-                                <InfoTooltip text="Transactions use a previously confirmed blockhash as a nonce to prevent double spends">
-                                    Recent Blockhash
-                                </InfoTooltip>
+                                <InfoTooltip text={t('transaction_tool_tip')}>{t('recent_blockhash')}</InfoTooltip>
                             )}
                         </td>
                         <td className="text-lg-end">{blockhash}</td>
@@ -323,7 +333,7 @@ function StatusCard({ signature, autoRefresh }: SignatureProps & AutoRefreshProp
 
                 {fee && (
                     <tr>
-                        <td>Fee (RENEC)</td>
+                        <td>{`${t('fee')} (RENEC)`}</td>
                         <td className="text-lg-end">
                             <SolBalance lamports={fee} />
                         </td>
@@ -332,14 +342,14 @@ function StatusCard({ signature, autoRefresh }: SignatureProps & AutoRefreshProp
 
                 {computeUnitsConsumed !== undefined && (
                     <tr>
-                        <td>Compute units consumed</td>
+                        <td>{t('compute_units_consumed')}</td>
                         <td className="text-lg-end">{computeUnitsConsumed.toLocaleString('en-US')}</td>
                     </tr>
                 )}
 
                 {version !== undefined && (
                     <tr>
-                        <td>Transaction Version</td>
+                        <td>{t('transaction_version')}</td>
                         <td className="text-lg-end text-uppercase">{version}</td>
                     </tr>
                 )}
@@ -349,6 +359,7 @@ function StatusCard({ signature, autoRefresh }: SignatureProps & AutoRefreshProp
 }
 
 function DetailsSection({ signature }: SignatureProps) {
+    const { t } = useLanguage();
     const details = useTransactionDetails(signature);
     const fetchDetails = useFetchTransactionDetails();
     const status = useTransactionStatus(signature);
@@ -370,9 +381,9 @@ function DetailsSection({ signature }: SignatureProps) {
     } else if (!details || details.status === FetchStatus.Fetching) {
         return <LoadingCard />;
     } else if (details.status === FetchStatus.FetchFailed) {
-        return <ErrorCard retry={refreshDetails} text="Failed to fetch details" />;
+        return <ErrorCard retry={refreshDetails} text={t('failed_to_fetch_details')} />;
     } else if (!transactionWithMeta || !message) {
-        return <ErrorCard text="Details are not available" />;
+        return <ErrorCard text={t('details_are_not_available')} />;
     }
 
     return (
@@ -386,6 +397,7 @@ function DetailsSection({ signature }: SignatureProps) {
 }
 
 function AccountsCard({ signature }: SignatureProps) {
+    const { t } = useLanguage();
     const details = useTransactionDetails(signature);
 
     const transactionWithMeta = details?.data?.transactionWithMeta;
@@ -397,7 +409,7 @@ function AccountsCard({ signature }: SignatureProps) {
     const { message } = transaction;
 
     if (!meta) {
-        return <ErrorCard text="Transaction metadata is missing" />;
+        return <ErrorCard text={t('transaction_metadata_missing')} />;
     }
 
     const accountRows = message.accountKeys.map((account, index) => {
@@ -420,14 +432,14 @@ function AccountsCard({ signature }: SignatureProps) {
                     <SolBalance lamports={post} />
                 </td>
                 <td>
-                    {index === 0 && <span className="badge bg-info-soft me-1">Fee Payer</span>}
-                    {account.signer && <span className="badge bg-info-soft me-1">Signer</span>}
-                    {account.writable && <span className="badge bg-danger-soft me-1">Writable</span>}
+                    {index === 0 && <span className="badge bg-info-soft me-1">{t('fee_payer')}</span>}
+                    {account.signer && <span className="badge bg-info-soft me-1">{t('signer')}</span>}
+                    {account.writable && <span className="badge bg-danger-soft me-1">{t('writable')}</span>}
                     {message.instructions.find(ix => ix.programId.equals(pubkey)) && (
-                        <span className="badge bg-warning-soft me-1">Program</span>
+                        <span className="badge bg-warning-soft me-1">{t('program')}</span>
                     )}
                     {account.source === 'lookupTable' && (
-                        <span className="badge bg-gray-soft me-1">Address Table Lookup</span>
+                        <span className="badge bg-gray-soft me-1">{t('address_table_lookup')}</span>
                     )}
                 </td>
             </tr>
@@ -437,17 +449,17 @@ function AccountsCard({ signature }: SignatureProps) {
     return (
         <div className="card">
             <div className="card-header">
-                <h3 className="card-header-title">Account Input(s)</h3>
+                <h3 className="card-header-title">{t('account_inputs')}</h3>
             </div>
             <div className="table-responsive mb-0">
                 <table className="table table-sm table-nowrap card-table">
                     <thead>
                         <tr>
                             <th className="text-muted">#</th>
-                            <th className="text-muted">Address</th>
-                            <th className="text-muted">Change (RENEC)</th>
-                            <th className="text-muted">Post Balance (RENEC)</th>
-                            <th className="text-muted">Details</th>
+                            <th className="text-muted">{t('address')}</th>
+                            <th className="text-muted">{`${t('change')} (RENEC)`}</th>
+                            <th className="text-muted">{`${t('post_balance')} (RENEC)`}</th>
+                            <th className="text-muted">{t('details')}</th>
                         </tr>
                     </thead>
                     <tbody className="list">{accountRows}</tbody>

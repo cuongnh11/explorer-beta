@@ -1,5 +1,6 @@
 import { Address } from '@components/common/Address';
 import { SolBalance } from '@components/common/SolBalance';
+import { useLanguage } from '@providers/language-provider';
 import { ParsedInstruction, SignatureResult, SystemProgram } from '@solana/web3.js';
 import React from 'react';
 
@@ -14,6 +15,7 @@ export function TransferDetailsCard(props: {
     innerCards?: JSX.Element[];
     childIndex?: number;
 }) {
+    const { t } = useLanguage();
     const { ix, index, result, info, innerCards, childIndex } = props;
 
     return (
@@ -21,33 +23,33 @@ export function TransferDetailsCard(props: {
             ix={ix}
             index={index}
             result={result}
-            title="System Program: Transfer"
+            title={t('system_program_transfer')}
             innerCards={innerCards}
             childIndex={childIndex}
         >
             <tr>
-                <td>Program</td>
+                <td>{t('program')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={SystemProgram.programId} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>From Address</td>
+                <td>{t('from_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.source} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>To Address</td>
+                <td>{t('to_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.destination} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Transfer Amount (RENEC)</td>
+                <td>{t('transfer_amount')} (RENEC)</td>
                 <td className="text-lg-end">
                     <SolBalance lamports={info.lamports} />
                 </td>

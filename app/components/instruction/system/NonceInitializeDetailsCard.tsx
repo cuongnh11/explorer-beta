@@ -1,4 +1,5 @@
 import { Address } from '@components/common/Address';
+import { useLanguage } from '@providers/language-provider';
 import { ParsedInstruction, SignatureResult, SystemProgram } from '@solana/web3.js';
 import React from 'react';
 
@@ -13,6 +14,7 @@ export function NonceInitializeDetailsCard(props: {
     innerCards?: JSX.Element[];
     childIndex?: number;
 }) {
+    const { t } = useLanguage();
     const { ix, index, result, info, innerCards, childIndex } = props;
 
     return (
@@ -20,26 +22,26 @@ export function NonceInitializeDetailsCard(props: {
             ix={ix}
             index={index}
             result={result}
-            title="System Program: Initialize Nonce"
+            title={t('system_program_initialize_nonce')}
             innerCards={innerCards}
             childIndex={childIndex}
         >
             <tr>
-                <td>Program</td>
+                <td>{t('program')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={SystemProgram.programId} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Nonce Address</td>
+                <td>{t('nonce_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.nonceAccount} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Authority Address</td>
+                <td>{t('authority_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.nonceAuthority} alignRight link />
                 </td>

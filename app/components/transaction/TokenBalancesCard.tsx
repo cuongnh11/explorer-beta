@@ -1,5 +1,6 @@
 import { Address } from '@components/common/Address';
 import { BalanceDelta } from '@components/common/BalanceDelta';
+import { useLanguage } from '@providers/language-provider';
 import { useTransactionDetails } from '@providers/transactions';
 import { ParsedMessageAccount, PublicKey, TokenAmount, TokenBalance } from '@solana/web3.js';
 import { SignatureProps } from '@utils/index';
@@ -40,15 +41,15 @@ export function TokenBalancesCard({ signature }: SignatureProps) {
         return null;
     }
 
-    return <TokenBalancesCardInner rows={rows} />
+    return <TokenBalancesCardInner rows={rows} />;
 }
 
 export type TokenBalancesCardInnerProps = {
-    rows: TokenBalanceRow[]
-}
-
+    rows: TokenBalanceRow[];
+};
 
 export function TokenBalancesCardInner({ rows }: TokenBalancesCardInnerProps) {
+    const { t } = useLanguage();
     const { cluster } = useCluster();
     const [tokenInfosLoading, setTokenInfosLoading] = useState(true);
     const [tokenSymbols, setTokenSymbols] = useState<Map<string, string>>(new Map());
@@ -61,7 +62,7 @@ export function TokenBalancesCardInner({ rows }: TokenBalancesCardInnerProps) {
                 setTokenInfosLoading(false);
             }
         });
-    }, [])
+    }, []);
 
     const accountRows = rows.map(({ account, delta, balance, mint }) => {
         const key = account.toBase58() + mint;
@@ -88,16 +89,16 @@ export function TokenBalancesCardInner({ rows }: TokenBalancesCardInnerProps) {
     return (
         <div className="card">
             <div className="card-header">
-                <h3 className="card-header-title">Token Balances</h3>
+                <h3 className="card-header-title">{t('token_balances')}</h3>
             </div>
             <div className="table-responsive mb-0">
                 <table className="table table-sm table-nowrap card-table">
                     <thead>
                         <tr>
-                            <th className="text-muted">Address</th>
+                            <th className="text-muted">{t('address')}</th>
                             <th className="text-muted">Token</th>
-                            <th className="text-muted">Change</th>
-                            <th className="text-muted">Post Balance</th>
+                            <th className="text-muted">{t('change')}</th>
+                            <th className="text-muted">{t('post_balance')}</th>
                         </tr>
                     </thead>
                     <tbody className="list">{accountRows}</tbody>
