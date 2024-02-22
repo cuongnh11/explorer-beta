@@ -1,4 +1,5 @@
 import { useCluster } from '@providers/cluster';
+import { useLanguage } from '@providers/language-provider';
 import { SignatureResult, TransactionInstruction } from '@solana/web3.js';
 import React from 'react';
 
@@ -20,6 +21,7 @@ export function TokenSwapDetailsCard({
     innerCards?: JSX.Element[];
     childIndex?: number;
 }) {
+    const { t } = useLanguage();
     const { url } = useCluster();
 
     let title;
@@ -37,7 +39,7 @@ export function TokenSwapDetailsCard({
             ix={ix}
             index={index}
             result={result}
-            title={`Token Swap: ${title || 'Unknown'}`}
+            title={t('token_swap', { title: title || 'Unknown' })}
             innerCards={innerCards}
             childIndex={childIndex}
             defaultRaw

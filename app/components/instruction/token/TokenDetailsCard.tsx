@@ -1,18 +1,19 @@
-import {Address} from '@components/common/Address';
-import {useFetchAccountInfo, useMintAccountInfo, useTokenAccountInfo} from '@providers/accounts';
-import {ParsedInstruction, ParsedTransaction, PublicKey, SignatureResult} from '@solana/web3.js';
-import {normalizeTokenAmount} from '@utils/index';
-import {ParsedInfo} from '@utils/validators/index';
+import { Address } from '@components/common/Address';
+import { useFetchAccountInfo, useMintAccountInfo, useTokenAccountInfo } from '@providers/accounts';
+import { useLanguage } from '@providers/language-provider';
+import { ParsedInstruction, ParsedTransaction, PublicKey, SignatureResult } from '@solana/web3.js';
+import { normalizeTokenAmount } from '@utils/index';
+import { ParsedInfo } from '@utils/validators/index';
 import React from 'react';
-import {create} from 'superstruct';
+import { create } from 'superstruct';
 import useSWR from 'swr';
 
-import {useCluster} from '@/app/providers/cluster';
-import {Cluster} from '@/app/utils/cluster';
-import {getTokenInfo, getTokenInfoSwrKey} from '@/app/utils/token-info';
+import { useCluster } from '@/app/providers/cluster';
+import { Cluster } from '@/app/utils/cluster';
+import { getTokenInfo, getTokenInfoSwrKey } from '@/app/utils/token-info';
 
-import {InstructionCard} from '../InstructionCard';
-import {IX_STRUCTS, IX_TITLES, TokenAmountUi, TokenInstructionType} from './types';
+import { InstructionCard } from '../InstructionCard';
+import { IX_STRUCTS, IX_TITLES, TokenAmountUi, TokenInstructionType } from './types';
 
 type DetailsProps = {
     tx: ParsedTransaction;
@@ -24,10 +25,11 @@ type DetailsProps = {
 };
 
 export function TokenDetailsCard(props: DetailsProps) {
+    const { t } = useLanguage();
     const parsed = create(props.ix.parsed, ParsedInfo);
     const { type: rawType, info } = parsed;
     const type = create(rawType, TokenInstructionType);
-    const title = `Token Program: ${IX_TITLES[type]}`;
+    const title = `${t('token_program')}: ${IX_TITLES[type]}`;
     const created = create(info, IX_STRUCTS[type] as any);
     return <TokenInstruction title={title} info={created} {...props} />;
 }
@@ -47,6 +49,7 @@ async function fetchTokenInfo([_, address, cluster]: ['get-token-info', string, 
 }
 
 function TokenInstruction(props: InfoProps) {
+    const { t } = useLanguage();
     const { mintAddress: infoMintAddress, tokenAddress } = React.useMemo(() => {
         let mintAddress: string | undefined;
         let tokenAddress: string | undefined;
@@ -125,7 +128,7 @@ function TokenInstruction(props: InfoProps) {
 
                 attributes.push(
                     <tr key={key + i}>
-                        <td>{label}</td>
+                        <td>{t(label.toLowerCase())}</td>
                         <td className="text-lg-end">
                             <Address pubkey={publicKey} alignRight link />
                         </td>
@@ -168,7 +171,7 @@ function TokenInstruction(props: InfoProps) {
 
         attributes.push(
             <tr key={key}>
-                <td>{label}</td>
+                <td>{t(label.toLowerCase())}</td>
                 <td className="text-lg-end">{tag}</td>
             </tr>
         );

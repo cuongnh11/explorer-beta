@@ -1,4 +1,5 @@
 import { Address } from '@components/common/Address';
+import { useLanguage } from '@providers/language-provider';
 import { ParsedInstruction, SignatureResult, StakeProgram } from '@solana/web3.js';
 import React from 'react';
 
@@ -13,6 +14,7 @@ export function MergeDetailsCard(props: {
     innerCards?: JSX.Element[];
     childIndex?: number;
 }) {
+    const { t } = useLanguage();
     const { ix, index, result, info, innerCards, childIndex } = props;
 
     return (
@@ -20,33 +22,33 @@ export function MergeDetailsCard(props: {
             ix={ix}
             index={index}
             result={result}
-            title="Stake Program: Merge Stake"
+            title={t('stake_program_merge_stake')}
             innerCards={innerCards}
             childIndex={childIndex}
         >
             <tr>
-                <td>Program</td>
+                <td>{t('program')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={StakeProgram.programId} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Stake Source</td>
+                <td>{t('stake_source')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.source} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Stake Destination</td>
+                <td>{t('stake_destination')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.destination} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Authority Address</td>
+                <td>{t('authority_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.stakeAuthority} alignRight link />
                 </td>

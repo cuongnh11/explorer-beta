@@ -1,6 +1,7 @@
 import { Address } from '@components/common/Address';
 import { Copyable } from '@components/common/Copyable';
 import { SolBalance } from '@components/common/SolBalance';
+import { useLanguage } from '@providers/language-provider';
 import { ParsedInstruction, SignatureResult, SystemProgram } from '@solana/web3.js';
 import React from 'react';
 
@@ -15,6 +16,7 @@ export function CreateWithSeedDetailsCard(props: {
     innerCards?: JSX.Element[];
     childIndex?: number;
 }) {
+    const { t } = useLanguage();
     const { ix, index, result, info, innerCards, childIndex } = props;
 
     return (
@@ -22,40 +24,40 @@ export function CreateWithSeedDetailsCard(props: {
             ix={ix}
             index={index}
             result={result}
-            title="System Program: Create Account w/ Seed"
+            title={t('system_program_create_account_seed')}
             innerCards={innerCards}
             childIndex={childIndex}
         >
             <tr>
-                <td>Program</td>
+                <td>{t('program')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={SystemProgram.programId} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>From Address</td>
+                <td>{t('from_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.source} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>New Address</td>
+                <td>{t('new_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.newAccount} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Base Address</td>
+                <td>{t('base_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.base} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Seed</td>
+                <td>{t('seed')}</td>
                 <td className="text-lg-end">
                     <Copyable text={info.seed}>
                         <code>{info.seed}</code>
@@ -64,19 +66,19 @@ export function CreateWithSeedDetailsCard(props: {
             </tr>
 
             <tr>
-                <td>Transfer Amount (RENEC)</td>
+                <td>{t('transfer_amount')} (RENEC)</td>
                 <td className="text-lg-end">
                     <SolBalance lamports={info.lamports} />
                 </td>
             </tr>
 
             <tr>
-                <td>Allocated Data Size</td>
+                <td>{t('allocated_data_size')}</td>
                 <td className="text-lg-end">{info.space} byte(s)</td>
             </tr>
 
             <tr>
-                <td>Assigned Program Id</td>
+                <td>{t('assigned_program_id')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.owner} alignRight link />
                 </td>

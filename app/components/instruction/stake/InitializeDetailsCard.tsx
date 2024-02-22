@@ -1,5 +1,6 @@
 import { Address } from '@components/common/Address';
 import { Epoch } from '@components/common/Epoch';
+import { useLanguage } from '@providers/language-provider';
 import { ParsedInstruction, SignatureResult, StakeProgram, SystemProgram } from '@solana/web3.js';
 import { displayTimestampUtc } from '@utils/date';
 import React from 'react';
@@ -15,6 +16,7 @@ export function InitializeDetailsCard(props: {
     innerCards?: JSX.Element[];
     childIndex?: number;
 }) {
+    const { t } = useLanguage();
     const { ix, index, result, info, innerCards, childIndex } = props;
 
     return (
@@ -22,33 +24,33 @@ export function InitializeDetailsCard(props: {
             ix={ix}
             index={index}
             result={result}
-            title="Stake Program: Initialize Stake"
+            title={t('stake_program_initialize_stake')}
             innerCards={innerCards}
             childIndex={childIndex}
         >
             <tr>
-                <td>Program</td>
+                <td>{t('program')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={StakeProgram.programId} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Stake Address</td>
+                <td>{t('stake_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.stakeAccount} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Stake Authority Address</td>
+                <td>{t('stake_authority_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.authorized.staker} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Withdraw Authority Address</td>
+                <td>{t('withdraw_authority_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.authorized.withdrawer} alignRight link />
                 </td>
@@ -56,7 +58,7 @@ export function InitializeDetailsCard(props: {
 
             {info.lockup.epoch > 0 && (
                 <tr>
-                    <td>Lockup Expiry Epoch</td>
+                    <td>{t('lockup_expiry_epoch')}</td>
                     <td className="text-lg-end">
                         <Epoch epoch={info.lockup.epoch} link />
                     </td>
@@ -65,7 +67,7 @@ export function InitializeDetailsCard(props: {
 
             {info.lockup.unixTimestamp > 0 && (
                 <tr>
-                    <td>Lockup Expiry Timestamp</td>
+                    <td>{t('lockup_expiry_timestamp')}</td>
                     <td className="text-lg-end font-monospace">
                         {displayTimestampUtc(info.lockup.unixTimestamp * 1000)}
                     </td>
@@ -74,7 +76,7 @@ export function InitializeDetailsCard(props: {
 
             {!info.lockup.custodian.equals(SystemProgram.programId) && (
                 <tr>
-                    <td>Lockup Custodian Address</td>
+                    <td>{t('lockup_custodian_address')}</td>
                     <td className="text-lg-end">
                         <Address pubkey={info.lockup.custodian} alignRight link />
                     </td>

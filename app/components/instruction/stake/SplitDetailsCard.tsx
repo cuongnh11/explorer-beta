@@ -1,5 +1,6 @@
 import { Address } from '@components/common/Address';
 import { SolBalance } from '@components/common/SolBalance';
+import { useLanguage } from '@providers/language-provider';
 import { ParsedInstruction, SignatureResult, StakeProgram } from '@solana/web3.js';
 import React from 'react';
 
@@ -14,6 +15,7 @@ export function SplitDetailsCard(props: {
     innerCards?: JSX.Element[];
     childIndex?: number;
 }) {
+    const { t } = useLanguage();
     const { ix, index, result, info, innerCards, childIndex } = props;
 
     return (
@@ -21,40 +23,40 @@ export function SplitDetailsCard(props: {
             ix={ix}
             index={index}
             result={result}
-            title="Stake Program: Split Stake"
+            title={t('stake_program_split_stake')}
             innerCards={innerCards}
             childIndex={childIndex}
         >
             <tr>
-                <td>Program</td>
+                <td>{t('program')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={StakeProgram.programId} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Stake Address</td>
+                <td>{t('stake_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.stakeAccount} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Authority Address</td>
+                <td>{t('authority_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.stakeAuthority} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>New Stake Address</td>
+                <td>{t('new_stake_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.newSplitAccount} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Split Amount (RENEC)</td>
+                <td>{t('split_amount')} (RENEC)</td>
                 <td className="text-lg-end">
                     <SolBalance lamports={info.lamports} />
                 </td>

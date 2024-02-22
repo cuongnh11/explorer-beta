@@ -1,4 +1,5 @@
 import { Address } from '@components/common/Address';
+import { useLanguage } from '@providers/language-provider';
 import { ParsedInstruction, SignatureResult } from '@solana/web3.js';
 import React from 'react';
 
@@ -13,6 +14,7 @@ export function CreateIdempotentDetailsCard(props: {
     innerCards?: JSX.Element[];
     childIndex?: number;
 }) {
+    const { t } = useLanguage();
     const { ix, index, result, info, innerCards, childIndex } = props;
 
     return (
@@ -20,47 +22,47 @@ export function CreateIdempotentDetailsCard(props: {
             ix={ix}
             index={index}
             result={result}
-            title="Associated Token Program: Create Idempotent"
+            title={t('associated_token_program_create_idempotent')}
             innerCards={innerCards}
             childIndex={childIndex}
         >
             <tr>
-                <td>Source</td>
+                <td>{t('source')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.source} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Account</td>
+                <td>{t('account')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.account} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Wallet</td>
+                <td>{t('wallet')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.wallet} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Mint</td>
+                <td>{t('mint')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.mint} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>System Program</td>
+                <td>{t('system_program')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.systemProgram} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Token Program</td>
+                <td>{t('token_program')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.tokenProgram} alignRight link />
                 </td>

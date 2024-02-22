@@ -1,4 +1,5 @@
 import { Address } from '@components/common/Address';
+import { useLanguage } from '@providers/language-provider';
 import { ParsedInstruction, SignatureResult } from '@solana/web3.js';
 import React from 'react';
 
@@ -13,6 +14,7 @@ export function RecoverNestedDetailsCard(props: {
     innerCards?: JSX.Element[];
     childIndex?: number;
 }) {
+    const { t } = useLanguage();
     const { ix, index, result, info, innerCards, childIndex } = props;
 
     return (
@@ -20,12 +22,12 @@ export function RecoverNestedDetailsCard(props: {
             ix={ix}
             index={index}
             result={result}
-            title="Associated Token Program: Recover Nested"
+            title={t('associated_token_program_recover_nested')}
             innerCards={innerCards}
             childIndex={childIndex}
         >
             <tr>
-                <td>Destination</td>
+                <td>{t('destination')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.destination} alignRight link />
                 </td>
@@ -60,14 +62,14 @@ export function RecoverNestedDetailsCard(props: {
             </tr>
 
             <tr>
-                <td>Owner</td>
+                <td>{t('owner')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.wallet} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Token Program</td>
+                <td>{t('token_program')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.tokenProgram} alignRight link />
                 </td>

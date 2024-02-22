@@ -7,6 +7,7 @@ import { Signature } from '@components/common/Signature';
 import { useAccountHistory } from '@providers/accounts';
 import { useFetchAccountHistory } from '@providers/accounts/history';
 import { FetchStatus } from '@providers/cache';
+import { useLanguage } from '@providers/language-provider';
 import { ParsedInstruction, ParsedTransactionWithMeta, PartiallyDecodedInstruction, PublicKey } from '@solana/web3.js';
 import { getTokenInstructionName, InstructionContainer } from '@utils/instruction';
 import React, { useMemo } from 'react';
@@ -16,6 +17,7 @@ import { getTransactionRows, HistoryCardFooter, HistoryCardHeader } from '../His
 import { extractMintDetails, MintDetails } from './common';
 
 export function TokenInstructionsCard({ address }: { address: string }) {
+    const { t } = useLanguage();
     const pubkey = useMemo(() => new PublicKey(address), [address]);
     const history = useAccountHistory(address);
     const fetchAccountHistory = useFetchAccountHistory();
@@ -103,25 +105,25 @@ export function TokenInstructionsCard({ address }: { address: string }) {
 
     if (history?.data === undefined) {
         if (history.status === FetchStatus.Fetching) {
-            return <LoadingCard message="Loading token instructions" />;
+            return <LoadingCard message={t('loading_token_instructions')} />;
         }
 
-        return <ErrorCard retry={refresh} text="Failed to fetch token instructions" />;
+        return <ErrorCard retry={refresh} text={t('failed_to_fetch_token_instructions')} />;
     }
 
     const fetching = history.status === FetchStatus.Fetching;
     return (
         <div className="card">
-            <HistoryCardHeader fetching={fetching} refresh={() => refresh()} title="Token Instructions" />
+            <HistoryCardHeader fetching={fetching} refresh={() => refresh()} title={t('token_instructions')} />
             <div className="table-responsive mb-0">
                 <table className="table table-sm table-nowrap card-table">
                     <thead>
                         <tr>
-                            <th className="text-muted w-1">Transaction Signature</th>
-                            {hasTimestamps && <th className="text-muted">Age</th>}
-                            <th className="text-muted">Instruction</th>
-                            <th className="text-muted">Program</th>
-                            <th className="text-muted">Result</th>
+                            <th className="text-muted w-1">{t('transaction_signature')}</th>
+                            {hasTimestamps && <th className="text-muted">{t('age')}</th>}
+                            <th className="text-muted">{t('instruction')}</th>
+                            <th className="text-muted">{t('program')}</th>
+                            <th className="text-muted">{t('result')}</th>
                         </tr>
                     </thead>
                     <tbody className="list">{detailsList}</tbody>

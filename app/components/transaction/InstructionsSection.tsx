@@ -1,38 +1,37 @@
-import {ErrorCard} from '@components/common/ErrorCard';
-import {LoadingCard} from '@components/common/LoadingCard';
-import {isAddressLookupTableInstruction} from '@components/instruction/address-lookup-table/types';
-import {AddressLookupTableDetailsCard} from '@components/instruction/AddressLookupTableDetailsCard';
-import {AssociatedTokenDetailsCard} from '@components/instruction/associated-token/AssociatedTokenDetailsCard';
-import {BpfLoaderDetailsCard} from '@components/instruction/bpf-loader/BpfLoaderDetailsCard';
-import {
-    BpfUpgradeableLoaderDetailsCard
-} from '@components/instruction/bpf-upgradeable-loader/BpfUpgradeableLoaderDetailsCard';
-import {ComputeBudgetDetailsCard} from '@components/instruction/ComputeBudgetDetailsCard';
-import {isGaslessTransactionInstruction} from "@components/instruction/Gasless";
-import {GasslessDetailsCard} from "@components/instruction/GasslessDetailsCard";
-import {MangoDetailsCard} from '@components/instruction/MangoDetails';
-import {MemoDetailsCard} from '@components/instruction/MemoDetailsCard';
-import {isNemoSwapInstruction} from "@components/instruction/NemoSwap";
-import {NemoSwapDetailsCard} from "@components/instruction/NemoSwapDetailsCard";
-import {PythDetailsCard} from '@components/instruction/pyth/PythDetailsCard';
-import {isPythInstruction} from '@components/instruction/pyth/types';
-import {isSerumInstruction} from '@components/instruction/serum/types';
-import {SerumDetailsCard} from '@components/instruction/SerumDetailsCard';
-import {StakeDetailsCard} from '@components/instruction/stake/StakeDetailsCard';
-import {SystemDetailsCard} from '@components/instruction/system/SystemDetailsCard';
-import {TokenDetailsCard} from '@components/instruction/token/TokenDetailsCard';
-import {isTokenLendingInstruction} from '@components/instruction/token-lending/types';
-import {isTokenSwapInstruction} from '@components/instruction/token-swap/types';
-import {TokenLendingDetailsCard} from '@components/instruction/TokenLendingDetailsCard';
-import {TokenSwapDetailsCard} from '@components/instruction/TokenSwapDetailsCard';
-import {UnknownDetailsCard} from '@components/instruction/UnknownDetailsCard';
-import {VoteDetailsCard} from '@components/instruction/vote/VoteDetailsCard';
-import {isWormholeInstruction} from '@components/instruction/wormhole/types';
-import {WormholeDetailsCard} from '@components/instruction/WormholeDetailsCard';
-import {useAnchorProgram} from '@providers/anchor';
-import {useCluster} from '@providers/cluster';
-import {useTransactionDetails, useTransactionStatus} from '@providers/transactions';
-import {useFetchTransactionDetails} from '@providers/transactions/parsed';
+import { ErrorCard } from '@components/common/ErrorCard';
+import { LoadingCard } from '@components/common/LoadingCard';
+import { isAddressLookupTableInstruction } from '@components/instruction/address-lookup-table/types';
+import { AddressLookupTableDetailsCard } from '@components/instruction/AddressLookupTableDetailsCard';
+import { AssociatedTokenDetailsCard } from '@components/instruction/associated-token/AssociatedTokenDetailsCard';
+import { BpfLoaderDetailsCard } from '@components/instruction/bpf-loader/BpfLoaderDetailsCard';
+import { BpfUpgradeableLoaderDetailsCard } from '@components/instruction/bpf-upgradeable-loader/BpfUpgradeableLoaderDetailsCard';
+import { ComputeBudgetDetailsCard } from '@components/instruction/ComputeBudgetDetailsCard';
+import { isGaslessTransactionInstruction } from '@components/instruction/Gasless';
+import { GasslessDetailsCard } from '@components/instruction/GasslessDetailsCard';
+import { MangoDetailsCard } from '@components/instruction/MangoDetails';
+import { MemoDetailsCard } from '@components/instruction/MemoDetailsCard';
+import { isNemoSwapInstruction } from '@components/instruction/NemoSwap';
+import { NemoSwapDetailsCard } from '@components/instruction/NemoSwapDetailsCard';
+import { PythDetailsCard } from '@components/instruction/pyth/PythDetailsCard';
+import { isPythInstruction } from '@components/instruction/pyth/types';
+import { isSerumInstruction } from '@components/instruction/serum/types';
+import { SerumDetailsCard } from '@components/instruction/SerumDetailsCard';
+import { StakeDetailsCard } from '@components/instruction/stake/StakeDetailsCard';
+import { SystemDetailsCard } from '@components/instruction/system/SystemDetailsCard';
+import { TokenDetailsCard } from '@components/instruction/token/TokenDetailsCard';
+import { isTokenLendingInstruction } from '@components/instruction/token-lending/types';
+import { isTokenSwapInstruction } from '@components/instruction/token-swap/types';
+import { TokenLendingDetailsCard } from '@components/instruction/TokenLendingDetailsCard';
+import { TokenSwapDetailsCard } from '@components/instruction/TokenSwapDetailsCard';
+import { UnknownDetailsCard } from '@components/instruction/UnknownDetailsCard';
+import { VoteDetailsCard } from '@components/instruction/vote/VoteDetailsCard';
+import { isWormholeInstruction } from '@components/instruction/wormhole/types';
+import { WormholeDetailsCard } from '@components/instruction/WormholeDetailsCard';
+import { useAnchorProgram } from '@providers/anchor';
+import { useCluster } from '@providers/cluster';
+import { useLanguage } from '@providers/language-provider';
+import { useTransactionDetails, useTransactionStatus } from '@providers/transactions';
+import { useFetchTransactionDetails } from '@providers/transactions/parsed';
 import {
     ComputeBudgetProgram,
     ParsedInnerInstruction,
@@ -42,14 +41,14 @@ import {
     SignatureResult,
     TransactionSignature,
 } from '@solana/web3.js';
-import {Cluster} from '@utils/cluster';
-import {INNER_INSTRUCTIONS_START_SLOT, SignatureProps} from '@utils/index';
-import {intoTransactionInstruction} from '@utils/tx';
+import { Cluster } from '@utils/cluster';
+import { INNER_INSTRUCTIONS_START_SLOT, SignatureProps } from '@utils/index';
+import { intoTransactionInstruction } from '@utils/tx';
 import React from 'react';
-import {ErrorBoundary} from 'react-error-boundary';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import AnchorDetailsCard from '../instruction/AnchorDetailsCard';
-import {isMangoInstruction} from '../instruction/mango/types';
+import { isMangoInstruction } from '../instruction/mango/types';
 
 export type InstructionDetailsProps = {
     tx: ParsedTransaction;
@@ -61,6 +60,7 @@ export type InstructionDetailsProps = {
 };
 
 export function InstructionsSection({ signature }: SignatureProps) {
+    const { t } = useLanguage();
     const status = useTransactionStatus(signature);
     const details = useTransactionDetails(signature);
     const { cluster, url } = useCluster();
@@ -70,12 +70,12 @@ export function InstructionsSection({ signature }: SignatureProps) {
     const result = status?.data?.info?.result;
     const transactionWithMeta = details?.data?.transactionWithMeta;
     if (!result || !transactionWithMeta) {
-        return <ErrorCard retry={refreshDetails} text="No instructions found" />;
+        return <ErrorCard retry={refreshDetails} text={t('no_instructions_found')} />;
     }
     const { meta, transaction } = transactionWithMeta;
 
     if (transaction.message.instructions.length === 0) {
-        return <ErrorCard retry={refreshDetails} text="No instructions found" />;
+        return <ErrorCard retry={refreshDetails} text={t('no_instructions_found')} />;
     }
 
     const innerInstructions: {
@@ -103,12 +103,12 @@ export function InstructionsSection({ signature }: SignatureProps) {
                 <div className="header">
                     <div className="header-body">
                         <h3 className="mb-0">
-                            {transaction.message.instructions.length > 1 ? 'Instructions' : 'Instruction'}
+                            {transaction.message.instructions.length > 1 ? t('instructions') : t('instruction')}
                         </h3>
                     </div>
                 </div>
             </div>
-            <React.Suspense fallback={<LoadingCard message="Loading Instructions" />}>
+            <React.Suspense fallback={<LoadingCard message={t('loading_instructions')} />}>
                 {transaction.message.instructions.map((instruction, index) => {
                     const innerCards: JSX.Element[] = [];
 
@@ -167,6 +167,7 @@ function InstructionCard({
     childIndex?: number;
     url: string;
 }) {
+    const { t } = useLanguage();
     const key = `${index}-${childIndex}`;
     const anchorProgram = useAnchorProgram(ix.programId.toString(), url);
 
@@ -209,7 +210,7 @@ function InstructionCard({
     const transactionIx = intoTransactionInstruction(tx, ix);
 
     if (!transactionIx) {
-        return <ErrorCard key={key} text="Could not display this instruction, please report" />;
+        return <ErrorCard key={key} text={t('could_not_display_instruction')} />;
     }
 
     const props = {
@@ -237,10 +238,10 @@ function InstructionCard({
         return <PythDetailsCard key={key} {...props} />;
     } else if (ComputeBudgetProgram.programId.equals(transactionIx.programId)) {
         return <ComputeBudgetDetailsCard key={key} {...props} />;
-    } else if(isNemoSwapInstruction(transactionIx)) {
-        return <NemoSwapDetailsCard key={key} {...props} />
-    } else if(isGaslessTransactionInstruction(transactionIx)) {
-        return <GasslessDetailsCard key={key} {...props} />
+    } else if (isNemoSwapInstruction(transactionIx)) {
+        return <NemoSwapDetailsCard key={key} {...props} />;
+    } else if (isGaslessTransactionInstruction(transactionIx)) {
+        return <GasslessDetailsCard key={key} {...props} />;
     } else if (anchorProgram) {
         return (
             <ErrorBoundary fallback={<UnknownDetailsCard {...props} />} key={key}>

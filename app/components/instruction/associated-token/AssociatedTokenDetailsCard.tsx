@@ -1,13 +1,13 @@
-import {ParsedInstruction, ParsedTransaction, SignatureResult} from '@solana/web3.js';
-import {ParsedInfo} from '@utils/validators/index';
+import { ParsedInstruction, ParsedTransaction, SignatureResult } from '@solana/web3.js';
+import { ParsedInfo } from '@utils/validators/index';
 import React from 'react';
-import {create} from 'superstruct';
+import { create } from 'superstruct';
 
-import {UnknownDetailsCard} from '../UnknownDetailsCard';
-import {CreateDetailsCard} from './CreateDetailsCard';
-import {CreateIdempotentDetailsCard} from './CreateIdempotentDetailsCard';
-import {RecoverNestedDetailsCard} from './RecoverNestedDetailsCard';
-import {CreateIdempotentInfo, RecoverNestedInfo} from './types';
+import { UnknownDetailsCard } from '../UnknownDetailsCard';
+import { CreateDetailsCard } from './CreateDetailsCard';
+import { CreateIdempotentDetailsCard } from './CreateIdempotentDetailsCard';
+import { RecoverNestedDetailsCard } from './RecoverNestedDetailsCard';
+import { CreateIdempotentInfo, RecoverNestedInfo } from './types';
 
 type DetailsProps = {
     tx: ParsedTransaction;

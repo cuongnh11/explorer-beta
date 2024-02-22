@@ -1,5 +1,6 @@
 import { Address } from '@components/common/Address';
 import { Copyable } from '@components/common/Copyable';
+import { useLanguage } from '@providers/language-provider';
 import { ParsedInstruction, SignatureResult, SystemProgram } from '@solana/web3.js';
 import React from 'react';
 
@@ -14,6 +15,7 @@ export function AssignWithSeedDetailsCard(props: {
     innerCards?: JSX.Element[];
     childIndex?: number;
 }) {
+    const { t } = useLanguage();
     const { ix, index, result, info, innerCards, childIndex } = props;
 
     return (
@@ -21,33 +23,33 @@ export function AssignWithSeedDetailsCard(props: {
             ix={ix}
             index={index}
             result={result}
-            title="System Program: Assign Account w/ Seed"
+            title={t('system_program_assign_account_seed')}
             innerCards={innerCards}
             childIndex={childIndex}
         >
             <tr>
-                <td>Program</td>
+                <td>{t('program')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={SystemProgram.programId} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Account Address</td>
+                <td>{t('account_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.account} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Base Address</td>
+                <td>{t('base_address')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.base} alignRight link />
                 </td>
             </tr>
 
             <tr>
-                <td>Seed</td>
+                <td>{t('seed')}</td>
                 <td className="text-lg-end">
                     <Copyable text={info.seed}>
                         <code>{info.seed}</code>
@@ -56,7 +58,7 @@ export function AssignWithSeedDetailsCard(props: {
             </tr>
 
             <tr>
-                <td>Assigned Program Id</td>
+                <td>{t('assigned_program_id')}</td>
                 <td className="text-lg-end">
                     <Address pubkey={info.owner} alignRight link />
                 </td>
